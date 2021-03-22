@@ -24,9 +24,21 @@ eval("\n\nmodule.exports = ansiHTML\n\n// Reference to https://github.com/sindre
 /*!**********************!*\
   !*** ./src/index.js ***!
   \**********************/
-/***/ (() => {
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-eval("\n\n//# sourceURL=webpack://gloJS2/./src/index.js?");
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _modules_openNumber__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./modules/openNumber */ \"./src/modules/openNumber.js\");\n\n(0,_modules_openNumber__WEBPACK_IMPORTED_MODULE_0__.default)();\n\n//# sourceURL=webpack://gloJS2/./src/index.js?");
+
+/***/ }),
+
+/***/ "./src/modules/openNumber.js":
+/*!***********************************!*\
+  !*** ./src/modules/openNumber.js ***!
+  \***********************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\nvar openNumber = function openNumber() {\n  // получаем кнопку-стрелку, блок во вторым номером, высоту блока с первым номером\n  var arrowButton = document.querySelector('.header-contacts__arrow'),\n      secondNumber = document.querySelector('.header-contacts__phone-number-accord'),\n      heightFirstNumber = document.querySelector('.header-contacts__phone-number-wrap').clientHeight; // состояние блока со вторым номером\n\n  var isOpen = 0; // событие на клик кнопки, выдвинуть или задвинуть второй номер в зависимости от состояния и отражение стрелки масштабом\n\n  arrowButton.addEventListener('click', function () {\n    if (!isOpen) {\n      secondNumber.style.transform = \"translateY(\".concat(heightFirstNumber, \"px)\");\n      secondNumber.childNodes[0].style.opacity = '1';\n      arrowButton.style.transform = 'scaleY(-1)';\n      isOpen = 1;\n    } else if (isOpen) {\n      secondNumber.style.transform = \"translateY(0px)\";\n      secondNumber.childNodes[0].style.opacity = '0';\n      arrowButton.style.transform = 'scaleY(1)';\n      isOpen = 0;\n    }\n  });\n};\n\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (openNumber);\n\n//# sourceURL=webpack://gloJS2/./src/modules/openNumber.js?");
 
 /***/ }),
 
@@ -411,6 +423,18 @@ eval("var map = {\n\t\"./log\": \"./node_modules/webpack/hot/log.js\"\n};\n\n\nf
 /******/ 	__webpack_require__.i = [];
 /******/ 	
 /************************************************************************/
+/******/ 	/* webpack/runtime/define property getters */
+/******/ 	(() => {
+/******/ 		// define getter functions for harmony exports
+/******/ 		__webpack_require__.d = (exports, definition) => {
+/******/ 			for(var key in definition) {
+/******/ 				if(__webpack_require__.o(definition, key) && !__webpack_require__.o(exports, key)) {
+/******/ 					Object.defineProperty(exports, key, { enumerable: true, get: definition[key] });
+/******/ 				}
+/******/ 			}
+/******/ 		};
+/******/ 	})();
+/******/ 	
 /******/ 	/* webpack/runtime/get javascript update chunk filename */
 /******/ 	(() => {
 /******/ 		// This function allow to reference all chunks
@@ -427,7 +451,7 @@ eval("var map = {\n\t\"./log\": \"./node_modules/webpack/hot/log.js\"\n};\n\n\nf
 /******/ 	
 /******/ 	/* webpack/runtime/getFullHash */
 /******/ 	(() => {
-/******/ 		__webpack_require__.h = () => ("af63c8b029992ff469cd")
+/******/ 		__webpack_require__.h = () => ("d8c2de90afeded94bae4")
 /******/ 	})();
 /******/ 	
 /******/ 	/* webpack/runtime/global */
@@ -490,6 +514,17 @@ eval("var map = {\n\t\"./log\": \"./node_modules/webpack/hot/log.js\"\n};\n\n\nf
 /******/ 			script.onerror = onScriptComplete.bind(null, script.onerror);
 /******/ 			script.onload = onScriptComplete.bind(null, script.onload);
 /******/ 			needAttach && document.head.appendChild(script);
+/******/ 		};
+/******/ 	})();
+/******/ 	
+/******/ 	/* webpack/runtime/make namespace object */
+/******/ 	(() => {
+/******/ 		// define __esModule on exports
+/******/ 		__webpack_require__.r = (exports) => {
+/******/ 			if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
+/******/ 				Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
+/******/ 			}
+/******/ 			Object.defineProperty(exports, '__esModule', { value: true });
 /******/ 		};
 /******/ 	})();
 /******/ 	
