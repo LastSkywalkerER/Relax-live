@@ -27,7 +27,7 @@ eval("\n\nmodule.exports = ansiHTML\n\n// Reference to https://github.com/sindre
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _modules_openNumber__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./modules/openNumber */ \"./src/modules/openNumber.js\");\n/* harmony import */ var _modules_popupMenu__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./modules/popupMenu */ \"./src/modules/popupMenu.js\");\n\n\n(0,_modules_openNumber__WEBPACK_IMPORTED_MODULE_0__.default)();\n(0,_modules_popupMenu__WEBPACK_IMPORTED_MODULE_1__.default)();\n\n//# sourceURL=webpack://gloJS2/./src/index.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _modules_openNumber__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./modules/openNumber */ \"./src/modules/openNumber.js\");\n/* harmony import */ var _modules_popupMenu__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./modules/popupMenu */ \"./src/modules/popupMenu.js\");\n/* harmony import */ var _modules_scroll__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./modules/scroll */ \"./src/modules/scroll.js\");\n\n\n\n(0,_modules_openNumber__WEBPACK_IMPORTED_MODULE_0__.default)();\n(0,_modules_popupMenu__WEBPACK_IMPORTED_MODULE_1__.default)();\n(0,_modules_scroll__WEBPACK_IMPORTED_MODULE_2__.default)();\n\n//# sourceURL=webpack://gloJS2/./src/index.js?");
 
 /***/ }),
 
@@ -50,6 +50,17 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpac
 
 "use strict";
 eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\nvar popupMenu = function popupMenu() {\n  // получаем обёртку всплыющего меню и через неё сам блок меню, а так же кнопку открытия меню\n  var popupMenuWrap = document.querySelector('.popup-menu'),\n      popupMenu = popupMenuWrap.childNodes[1],\n      burgerButton = document.querySelector('.menu'); // прячем меню, чтоб оно не летало по экрану\n\n  popupMenu.style.visibility = 'hidden'; // функция открытия меню\n\n  var openPopup = function openPopup() {\n    popupMenuWrap.style.visibility = 'visible';\n    popupMenu.style.visibility = 'visible';\n    popupMenu.style.transform = \"translate3D(0, 0, 0)\";\n    popupMenuWrap.addEventListener('click', checkClose);\n  }; // функция закрытия меню\n\n\n  var closePopup = function closePopup() {\n    popupMenuWrap.style.visibility = 'hidden';\n    popupMenu.style.visibility = 'hidden';\n    popupMenu.style.transform = '';\n    popupMenuWrap.removeEventListener('click', checkClose);\n  }; // проверяем куда мы кликнули и зачем\n\n\n  var checkClose = function checkClose(event) {\n    var closeButtonSelector = '.close-menu',\n        menuLinkSelector = '.menu-link',\n        menuSelector = '.' + popupMenu.classList[0];\n\n    if (!event.target.closest(menuSelector) || event.target.closest(menuLinkSelector) || event.target.closest(closeButtonSelector)) {\n      closePopup();\n    }\n  }; // события на кнопку открытия, места закрытия меню\n\n\n  burgerButton.addEventListener('click', openPopup);\n};\n\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (popupMenu);\n\n//# sourceURL=webpack://gloJS2/./src/modules/popupMenu.js?");
+
+/***/ }),
+
+/***/ "./src/modules/scroll.js":
+/*!*******************************!*\
+  !*** ./src/modules/scroll.js ***!
+  \*******************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\nvar scroll = function scroll() {\n  var positionControl = null,\n      speed = 10,\n      // скопрость прокрутки, больше - быстрее\n  accelerate;\n  var accelerateRatio = 0.5; // ускорение прокрутки от 0 до 1\n\n  var paraboleByThreePointsY = function paraboleByThreePointsY(x1, y1, x2, y2, x3, y3, x, dx) {\n    var a = (y3 - (x3 * (y2 - y1) + x2 * y1 - x1 * y2) / (x2 - x1)) / (x3 * (x3 - x1 - x2) + x1 * x2),\n        b = (y2 - y1) / (x2 - x1) - a * (x1 + x2),\n        c = (x2 * y1 - x1 * y2) / (x2 - x1) + a * x1 * x2;\n    console.log(x1, y1, x2, y2, x3, y3, x, dx);\n    return a * x * x + b * x + c + dx;\n  };\n\n  var smoothScroll = function smoothScroll(scrollTo) {\n    var positionY = document.querySelector(scrollTo).offsetTop,\n        position = document.documentElement.scrollTop;\n    document.documentElement.scrollTop = position + paraboleByThreePointsY(Math.min(0, positionY), 0, positionY / 2, accelerate, Math.max(0, positionY), 0, position, speed);\n\n    if (positionControl !== position) {\n      requestAnimationFrame(function () {\n        smoothScroll(scrollTo);\n      });\n    }\n\n    positionControl = position;\n  };\n\n  document.addEventListener('click', function (event) {\n    var link = event.target.closest('a');\n\n    if (link) {\n      link = link.getAttribute('href');\n\n      if (link[0] === '#' && link !== '#close' && link.length > 1) {\n        var positionY = document.querySelector(link).offsetTop,\n            startPoint = document.documentElement.scrollTop;\n        positionControl = null;\n        accelerate = Math.pow(Math.max(positionY, startPoint) - Math.min(positionY, startPoint), accelerateRatio);\n\n        if (positionY >= startPoint) {\n          speed = Math.abs(speed);\n        } else {\n          speed = -Math.abs(speed);\n        }\n\n        event.preventDefault();\n        smoothScroll(link);\n      }\n    }\n  });\n};\n\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (scroll);\n\n//# sourceURL=webpack://gloJS2/./src/modules/scroll.js?");
 
 /***/ }),
 
@@ -462,7 +473,7 @@ eval("var map = {\n\t\"./log\": \"./node_modules/webpack/hot/log.js\"\n};\n\n\nf
 /******/ 	
 /******/ 	/* webpack/runtime/getFullHash */
 /******/ 	(() => {
-/******/ 		__webpack_require__.h = () => ("9b342e3b2eb3f1479af4")
+/******/ 		__webpack_require__.h = () => ("eab004a875384e0d250a")
 /******/ 	})();
 /******/ 	
 /******/ 	/* webpack/runtime/global */
