@@ -9,14 +9,15 @@ const openNumber = () => {
 
   // событие на клик кнопки, выдвинуть или задвинуть второй номер в зависимости от состояния и отражение стрелки масштабом
   arrowButton.addEventListener('click', () => {
+
     if (!isOpen) {
       secondNumber.style.transform = `translateY(${heightFirstNumber}px)`;
-      secondNumber.childNodes[0].style.opacity = '1';
+      secondNumber.childNodes[1].style.opacity = '1';
       arrowButton.style.transform = 'scaleY(-1)';
       isOpen = 1;
     } else if (isOpen) {
       secondNumber.style.transform = `translateY(0px)`;
-      secondNumber.childNodes[0].style.opacity = '0';
+      secondNumber.childNodes[1].style.opacity = '0';
       arrowButton.style.transform = 'scaleY(1)';
       isOpen = 0;
     }

@@ -38,7 +38,7 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _mod
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\nvar openNumber = function openNumber() {\n  // получаем кнопку-стрелку, блок во вторым номером, высоту блока с первым номером\n  var arrowButton = document.querySelector('.header-contacts__arrow'),\n      secondNumber = document.querySelector('.header-contacts__phone-number-accord'),\n      heightFirstNumber = document.querySelector('.header-contacts__phone-number-wrap').clientHeight; // состояние блока со вторым номером\n\n  var isOpen = 0; // событие на клик кнопки, выдвинуть или задвинуть второй номер в зависимости от состояния и отражение стрелки масштабом\n\n  arrowButton.addEventListener('click', function () {\n    if (!isOpen) {\n      secondNumber.style.transform = \"translateY(\".concat(heightFirstNumber, \"px)\");\n      secondNumber.childNodes[0].style.opacity = '1';\n      arrowButton.style.transform = 'scaleY(-1)';\n      isOpen = 1;\n    } else if (isOpen) {\n      secondNumber.style.transform = \"translateY(0px)\";\n      secondNumber.childNodes[0].style.opacity = '0';\n      arrowButton.style.transform = 'scaleY(1)';\n      isOpen = 0;\n    }\n  });\n};\n\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (openNumber);\n\n//# sourceURL=webpack://gloJS2/./src/modules/openNumber.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\nvar openNumber = function openNumber() {\n  // получаем кнопку-стрелку, блок во вторым номером, высоту блока с первым номером\n  var arrowButton = document.querySelector('.header-contacts__arrow'),\n      secondNumber = document.querySelector('.header-contacts__phone-number-accord'),\n      heightFirstNumber = document.querySelector('.header-contacts__phone-number-wrap').clientHeight; // состояние блока со вторым номером\n\n  var isOpen = 0; // событие на клик кнопки, выдвинуть или задвинуть второй номер в зависимости от состояния и отражение стрелки масштабом\n\n  arrowButton.addEventListener('click', function () {\n    if (!isOpen) {\n      secondNumber.style.transform = \"translateY(\".concat(heightFirstNumber, \"px)\");\n      secondNumber.childNodes[1].style.opacity = '1';\n      arrowButton.style.transform = 'scaleY(-1)';\n      isOpen = 1;\n    } else if (isOpen) {\n      secondNumber.style.transform = \"translateY(0px)\";\n      secondNumber.childNodes[1].style.opacity = '0';\n      arrowButton.style.transform = 'scaleY(1)';\n      isOpen = 0;\n    }\n  });\n};\n\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (openNumber);\n\n//# sourceURL=webpack://gloJS2/./src/modules/openNumber.js?");
 
 /***/ }),
 
@@ -473,7 +473,7 @@ eval("var map = {\n\t\"./log\": \"./node_modules/webpack/hot/log.js\"\n};\n\n\nf
 /******/ 	
 /******/ 	/* webpack/runtime/getFullHash */
 /******/ 	(() => {
-/******/ 		__webpack_require__.h = () => ("4ca7c026e0250f18115c")
+/******/ 		__webpack_require__.h = () => ("4607f6ce8b2514981c36")
 /******/ 	})();
 /******/ 	
 /******/ 	/* webpack/runtime/global */
