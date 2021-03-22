@@ -27,7 +27,7 @@ eval("\n\nmodule.exports = ansiHTML\n\n// Reference to https://github.com/sindre
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _modules_openNumber__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./modules/openNumber */ \"./src/modules/openNumber.js\");\n\n(0,_modules_openNumber__WEBPACK_IMPORTED_MODULE_0__.default)();\n\n//# sourceURL=webpack://gloJS2/./src/index.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _modules_openNumber__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./modules/openNumber */ \"./src/modules/openNumber.js\");\n/* harmony import */ var _modules_popupMenu__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./modules/popupMenu */ \"./src/modules/popupMenu.js\");\n\n\n(0,_modules_openNumber__WEBPACK_IMPORTED_MODULE_0__.default)();\n(0,_modules_popupMenu__WEBPACK_IMPORTED_MODULE_1__.default)();\n\n//# sourceURL=webpack://gloJS2/./src/index.js?");
 
 /***/ }),
 
@@ -39,6 +39,17 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _mod
 
 "use strict";
 eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\nvar openNumber = function openNumber() {\n  // получаем кнопку-стрелку, блок во вторым номером, высоту блока с первым номером\n  var arrowButton = document.querySelector('.header-contacts__arrow'),\n      secondNumber = document.querySelector('.header-contacts__phone-number-accord'),\n      heightFirstNumber = document.querySelector('.header-contacts__phone-number-wrap').clientHeight; // состояние блока со вторым номером\n\n  var isOpen = 0; // событие на клик кнопки, выдвинуть или задвинуть второй номер в зависимости от состояния и отражение стрелки масштабом\n\n  arrowButton.addEventListener('click', function () {\n    if (!isOpen) {\n      secondNumber.style.transform = \"translateY(\".concat(heightFirstNumber, \"px)\");\n      secondNumber.childNodes[0].style.opacity = '1';\n      arrowButton.style.transform = 'scaleY(-1)';\n      isOpen = 1;\n    } else if (isOpen) {\n      secondNumber.style.transform = \"translateY(0px)\";\n      secondNumber.childNodes[0].style.opacity = '0';\n      arrowButton.style.transform = 'scaleY(1)';\n      isOpen = 0;\n    }\n  });\n};\n\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (openNumber);\n\n//# sourceURL=webpack://gloJS2/./src/modules/openNumber.js?");
+
+/***/ }),
+
+/***/ "./src/modules/popupMenu.js":
+/*!**********************************!*\
+  !*** ./src/modules/popupMenu.js ***!
+  \**********************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\nvar popupMenu = function popupMenu() {\n  var popupMenuWrap = document.querySelector('.popup-menu'),\n      popupMenu = popupMenuWrap.childNodes[1],\n      burgerButton = document.querySelector('.menu');\n\n  var openPopup = function openPopup() {\n    popupMenuWrap.style.visibility = 'visible';\n    popupMenu.style.transform = \"translate3D(0, 0, 0)\";\n    popupMenuWrap.addEventListener('click', checkClose);\n  };\n\n  var closePopup = function closePopup() {\n    popupMenuWrap.style.visibility = 'hidden';\n    popupMenu.style.transform = \"translate3D(555px, 0, 0)\";\n    popupMenuWrap.removeEventListener('click', checkClose);\n  };\n\n  var checkClose = function checkClose(event) {\n    var closeButtonSelector = '.close-menu',\n        menuLinkSelector = '.menu-link',\n        menuSelector = '.' + popupMenu.classList[0],\n        menuWrapSelector = '.' + popupMenuWrap.classList[0];\n    console.log(event.target.closest(menuSelector));\n\n    if (!event.target.closest(menuSelector) || event.target.closest(menuLinkSelector) || event.target.closest(closeButtonSelector)) {\n      closePopup();\n    }\n  };\n\n  burgerButton.addEventListener('click', openPopup);\n};\n\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (popupMenu);\n\n//# sourceURL=webpack://gloJS2/./src/modules/popupMenu.js?");
 
 /***/ }),
 
@@ -451,7 +462,7 @@ eval("var map = {\n\t\"./log\": \"./node_modules/webpack/hot/log.js\"\n};\n\n\nf
 /******/ 	
 /******/ 	/* webpack/runtime/getFullHash */
 /******/ 	(() => {
-/******/ 		__webpack_require__.h = () => ("d8c2de90afeded94bae4")
+/******/ 		__webpack_require__.h = () => ("19d1b723d2a82f6aebc7")
 /******/ 	})();
 /******/ 	
 /******/ 	/* webpack/runtime/global */
