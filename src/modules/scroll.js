@@ -33,7 +33,7 @@ const scroll = () => {
 
     if (link) {
       link = link.getAttribute('href');
-      if (link[0] === '#' &&
+      if (link && link[0] === '#' &&
         link !== '#close' && link.length > 1) {
         event.preventDefault();
 
