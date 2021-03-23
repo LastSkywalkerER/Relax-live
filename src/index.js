@@ -9,8 +9,14 @@ openNumber();
 popupMenu();
 scroll();
 openModal({
+  modalWrapSelector: '.popup-privacy',
+  modalWindowSelector: '.popup-dialog-privacy',
+  openButtonsSelector: '.link-privacy',
+  closeButtonSelector: '.close'
+});
+openModal({
   modalWrapSelector: '.popup-repair-types',
-  modalWindowSelector: '.popup-dialog',
+  modalWindowSelector: '.popup-dialog-repair-types',
   openButtonsSelector: '#full-price',
   closeButtonSelector: '.close'
 });
