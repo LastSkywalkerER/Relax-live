@@ -1,6 +1,5 @@
-const phoneMask = () => {
-  const inputFields = document.querySelectorAll('input[name="phone"]'),
-    mask = '+7 (___) ___-__-__';
+const phoneMask = (mask) => {
+  const inputFields = document.querySelectorAll('input[name="phone"]');
 
   const checkMask = event => {
 
@@ -11,7 +10,6 @@ const phoneMask = () => {
       event.target.value = event.target.value.slice(mask.indexOf('_'));
       event.target.value = event.target.value.replace(/[^\d]/g, '');
 
-      console.log(event.target.value);
       event.target.value.split('').forEach(char => {
         fillString = fillString.replace(/_/, (match, offset) => {
           cursorPosition = offset + 1;
@@ -35,9 +33,16 @@ const phoneMask = () => {
     }
   };
 
+  const clearIfEmpty = event => {
+    if (event.target.value === mask) {
+      event.target.value = '';
+    }
+  }
+
   inputFields.forEach(field => {
     field.addEventListener('input', checkMask);
     field.addEventListener('focus', setBegin);
+    field.addEventListener('blur', clearIfEmpty);
   });
 
 
