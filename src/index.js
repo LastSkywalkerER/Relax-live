@@ -4,6 +4,7 @@ import scroll from './modules/scroll';
 import openModal from './modules/openModal';
 import phoneMask from './modules/phoneMask';
 import sendForm from './modules/sendForm';
+import formulaPopup from './modules/formulaPopup';
 
 openNumber();
 popupMenu();
@@ -22,3 +23,4 @@ openModal({
 });
 phoneMask('+7 (___) ___-__-__');
 sendForm();
+formulaPopup();
