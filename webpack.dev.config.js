@@ -11,7 +11,7 @@ module.exports = {
   },
   mode: 'development',
   devServer: {
-    open: true,
+    open: 'D:\\Program Files\\Mozilla Firefox\\firefox.exe',
     port: 8080,
     hot: true,
     writeToDisk: true,
