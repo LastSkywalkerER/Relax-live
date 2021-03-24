@@ -9,6 +9,7 @@ const formulaPopup = () => {
     style.classList.add('down-hint-style');
     style.textContent = `
       .formula-item-popup {
+        z-index: 100;
       }
       .formula-item-popup:before {
         -webkit-transform: rotate(180deg) translateY(20px);
@@ -17,7 +18,9 @@ const formulaPopup = () => {
     `;
     document.head.append(style);
 
-    hint.closest(rowSelector).style.zIndex = '99';
+    if (hint.closest(rowSelector)) {
+      hint.closest(rowSelector).style.zIndex = '99';
+    }
   };
 
   const removeDownHintStyle = hint => {
@@ -26,30 +29,29 @@ const formulaPopup = () => {
       style.remove();
     }
     if (hint) {
-      hint.closest(rowSelector).style.zIndex = '';
+      if (hint.closest(rowSelector)) {
+        hint.closest(rowSelector).style.zIndex = '';
+      }
     }
   };
 
   const elementInViewport = (el) => {
     let top = el.offsetTop,
-      left = el.offsetLeft,
-      width = el.offsetWidth,
       height = el.offsetHeight;
 
     while (el.offsetParent) {
       el = el.offsetParent;
       top += el.offsetTop;
-      left += el.offsetLeft;
     }
 
     return (
-      top >= window.pageYOffset && left >= window.pageXOffset && (top + height) <= (window.pageYOffset + window.innerHeight) && (left + width) <= (window.pageXOffset + window.innerWidth)
+      top >= window.pageYOffset && (top + height) <= (window.pageYOffset + window.innerHeight)
     );
   };
 
   const downPositionElement = el => {
     el.style.transform = 'translateY(100%)';
-    el.style.bottom = '-50px';
+    el.style.bottom = '-80px';
   };
 
   const defaultPositionElement = el => {

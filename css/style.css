@@ -1232,8 +1232,8 @@ template,
 }
 @media (max-width: 1024px) {
   .formula-item-popup {
-    padding-top: 35px;
-    top: 155px;
+    /* padding-top: 35px; */
+    /* top: 155px; */
   }
 }
 @media (max-width: 575px) {
@@ -1247,12 +1247,12 @@ template,
     line-height: 20px;
   }
 }
-@media (max-width: 1024px) {
+/* @media (max-width: 1024px) {
   .formula-item-popup:before {
     -webkit-transform: rotate(180deg);
     transform: rotate(180deg);
   }
-}
+} */
 @media (max-width: 575px) {
   .formula-item-popup:before {
     max-width: 290px;
