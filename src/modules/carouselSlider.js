@@ -6,6 +6,7 @@ class CarouselSlider {
     prev,
     pagination,
     overflow = false,
+    hideOverflow = false,
     infinity = false,
     position = 0,
     slidesToShow = 3,
@@ -26,6 +27,7 @@ class CarouselSlider {
     this.prev = document.querySelector(prev);
     this.pagination = pagination;
     this.overflow = overflow;
+    this.hideOverflow = hideOverflow;
     this.slidesToShow = slidesToShow;
     this.slidesToHighlight = slidesToHighlight;
     this.options = {
@@ -232,6 +234,9 @@ class CarouselSlider {
   setCurrentSlide() {
     this.addStyle();
     this.moveSlides();
+    if (this.hideOverflow) {
+      this.showSlides();
+    }
     if (this.slidesToHighlight) {
       this.highlightСurrent();
     }
@@ -266,13 +271,26 @@ class CarouselSlider {
     }
   }
 
+  showSlides() {
+    let beginSlideIndex = this.options.position,
+      endSlideIndex = this.options.position + this.slidesToShow;
+    if (beginSlideIndex === endSlideIndex) {
+      endSlideIndex++;
+    }
+    const slidesToShow = [...this.wrap.children].slice(beginSlideIndex, endSlideIndex);
+
+    [...this.wrap.children].forEach(slide => slide.style.opacity = '0');
+
+    slidesToShow.forEach(slide => slide.style.opacity = '');
+  }
+
   highlightСurrent() {
     let beginSlideIndex = this.options.position + Math.floor((this.slidesToShow - this.slidesToHighlight) / 2),
       endSlideIndex = this.options.position + Math.floor(this.slidesToShow - this.slidesToHighlight / 2);
     if (beginSlideIndex === endSlideIndex) {
       endSlideIndex++;
     }
-    const slidesToShow = [...this.wrap.children].slice(beginSlideIndex, endSlideIndex);
+    const slidesToHighlight = [...this.wrap.children].slice(beginSlideIndex, endSlideIndex);
 
     [...this.wrap.children].forEach(slide => {
       slide.style.transform = '';
@@ -280,7 +298,11 @@ class CarouselSlider {
       [...slide.children].forEach(item => item.style.zIndex = '');
     });
 
-    slidesToShow.forEach(slide => {
+    if (this.hideOverflow) {
+      this.showSlides();
+    }
+
+    slidesToHighlight.forEach(slide => {
       slide.style.transform = 'scale(1.2)';
       slide.style.opacity = '1';
       [...slide.children].forEach(item => item.style.zIndex = '99');

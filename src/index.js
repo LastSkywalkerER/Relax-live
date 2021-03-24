@@ -36,6 +36,7 @@ const carouselSliderFormula = new CarouselSlider({
   slidesToShow: 3,
   slidesToHighlight: 1,
   overflow: true,
+  hideOverflow: true,
   infinity: true,
   responsive: [{
       breackpoint: 768,
