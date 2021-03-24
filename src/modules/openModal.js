@@ -33,7 +33,6 @@ const openModal = ({
     modalWindow.style.transform = `scale(${scale})`;
 
     const closeAnimation = () => {
-      console.log(scale);
       scale -= 0.1;
       modalWindow.style.transform = `scale(${scale})`;
       if (scale >= 0.1) {

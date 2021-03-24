@@ -4,23 +4,13 @@ class CarouselSlider {
     wrap,
     next,
     prev,
+    pagination,
+    overflow = false,
     infinity = false,
     position = 0,
     slidesToShow = 3,
     slidesToHighlight = 0,
-    responsive = [{
-        breackpoint: 1024,
-        slidesToShow: 3
-      },
-      {
-        breackpoint: 768,
-        slidesToShow: 2
-      },
-      {
-        breackpoint: 576,
-        slidesToShow: 1
-      }
-    ],
+    responsive,
   }) {
     try {
       this.main = document.querySelector(main);
@@ -33,6 +23,8 @@ class CarouselSlider {
     }
     this.next = document.querySelector(next);
     this.prev = document.querySelector(prev);
+    this.pagination = pagination;
+    this.overflow = overflow;
     this.slidesToShow = slidesToShow;
     this.slidesToHighlight = slidesToHighlight;
     this.options = {
@@ -59,9 +51,29 @@ class CarouselSlider {
     if (this.prev && this.next) {
       this.stylizationArrows();
       this.controlSlider();
-    } else {
+    } else if (this.prev === true && this.next === true) {
       this.addArrow();
       this.controlSlider();
+    } else {
+      this.controlSlider();
+    }
+
+    if (this.pagination) {
+      if (this.pagination.type === 'counter') {
+        this.paginationCurrent = document.querySelector(this.pagination.current);
+        this.paginationTotal = document.querySelector(this.pagination.total);
+        this.controlPaginationCounter();
+      }
+      if (this.pagination.type === 'button') {
+        this.buttons = [...document.querySelector(this.pagination.wrap).children];
+        this.controlPaginationButton();
+      }
+      this.controlPagination();
+    }
+
+
+    if (this.slidesToHighlight) {
+      this.highlightСurrent();
     }
 
   }
@@ -100,7 +112,7 @@ class CarouselSlider {
 
     this.style.textContent = `
     .glo-slider {
-      overflowX: hidden !important;
+      ${this.overflow ? '' : 'overflow-x: hidden !important'};
       position: relative;
     }
     .glo-slider__wrap {
@@ -123,7 +135,7 @@ class CarouselSlider {
   disableAnimation() {
     this.style.textContent = `
     .glo-slider {
-      overflow: hidden !important;
+      ${this.overflow ? '' : 'overflow-x: hidden !important'};
       position: relative;
     }
     .glo-slider__wrap {
@@ -141,25 +153,56 @@ class CarouselSlider {
   }
 
   controlSlider() {
-    this.prev.addEventListener('click', this.prevSlider.bind(this));
-    this.next.addEventListener('click', this.nextSlider.bind(this));
+    if (this.prev && this.next) {
+      this.prev.addEventListener('click', this.prevSlider.bind(this));
+      this.next.addEventListener('click', this.nextSlider.bind(this));
 
-    if (this.slidesToHighlight) {
-      this.highlightСurrent();
+      document.addEventListener('keydown', event => {
+        if (event.key === 'ArrowRight') {
+          this.nextSlider();
+        }
+        if (event.key === 'ArrowLeft') {
+          this.prevSlider();
+        }
+      });
     }
+  }
 
-    document.addEventListener('keydown', event => {
-      if (event.key === 'ArrowRight') {
-        this.nextSlider();
+  controlPagination() {
+    if (this.pagination) {
+      if (this.pagination.type === 'counter') {
+        this.controlPaginationCounter();
       }
-      if (event.key === 'ArrowLeft') {
-        this.prevSlider();
+      if (this.pagination.type === 'button') {
+        this.controlPaginationButton();
       }
-    });
+    }
+  }
+
+  controlPaginationCounter() {
+    let counter = this.options.position + 1;
+    while ((counter - this.slides.length) > 0) {
+      counter -= this.slides.length;
+    }
+    this.paginationCurrent.textContent = counter;
+    this.paginationTotal.textContent = this.slides.length;
+  }
+
+  controlPaginationButton() {
+
   }
 
   moveSlides() {
     this.wrap.style.transform = `translateX(${-this.options.position * this.options.widthSlide}%)`;
+  }
+
+  setCurrentSlide() {
+    this.addStyle();
+    this.moveSlides();
+    if (this.slidesToHighlight) {
+      this.highlightСurrent();
+    }
+    this.controlPagination();
   }
 
   prevSlider() {
@@ -170,15 +213,10 @@ class CarouselSlider {
     }
     if (this.options.infinity || this.options.position > 0) {
       setTimeout(() => {
-        this.addStyle();
         --this.options.position;
-        this.moveSlides();
-        if (this.slidesToHighlight) {
-          this.highlightСurrent();
-        }
+        this.setCurrentSlide();
       }, 5);
     }
-
   }
 
   nextSlider() {
@@ -189,15 +227,10 @@ class CarouselSlider {
     }
     if (this.options.infinity || this.options.position < this.options.maxPosition) {
       setTimeout(() => {
-        this.addStyle();
         ++this.options.position;
-        this.moveSlides();
-        if (this.slidesToHighlight) {
-          this.highlightСurrent();
-        }
+        this.setCurrentSlide();
       }, 5);
     }
-
   }
 
   highlightСurrent() {
