@@ -6900,18 +6900,13 @@ div.wave-block:nth-child(17):after {
 }
 @media (max-width: 1024px) {
   .nav-list-repair {
-    min-width: 1200px;
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
-    -ms-flex-wrap: wrap;
-    flex-wrap: wrap;
-    max-width: 100%;
   }
 }
 @media (max-width: 575px) {
   .nav-list-repair {
-    min-width: 1086px;
   }
 }
 .nav-list-popup-repair {
@@ -7311,6 +7306,12 @@ div.wave-block:nth-child(17):after {
   top: 0;
   left: 0;
   z-index: -1;
+}
+@media (max-width: 1024px) {
+  .button_o svg {
+    left: 50%;
+    transform: translateX(-50%);
+  }
 }
 .button_o svg path {
   position: absolute;
@@ -8557,4 +8558,6 @@ strong {
 .slide-wrapper {
   border-radius: 50%;
   overflow: hidden;
+  width: 100%;
+  height: 100%;
 }

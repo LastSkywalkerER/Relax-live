@@ -1,3 +1,5 @@
+'use strict';
+
 import openNumber from './modules/openNumber';
 import popupMenu from './modules/popupMenu';
 import scroll from './modules/scroll';
@@ -55,21 +57,57 @@ const carouselSliderRepairTypesTabs = new CarouselSlider({
     wrap: '.nav-list-repair',
     active: '.active',
   },
+  sliderInSlider: (nextSliderSelector, prevSlider) => {
+    if (prevSlider) {
+      prevSlider.delete();
+    }
+    return new CarouselSlider({
+      main: '.repair-types-slider',
+      wrap: nextSliderSelector,
+      prev: '#repair-types-arrow_left',
+      next: '#repair-types-arrow_right',
+      overflow: true,
+      pagination: {
+        type: 'counter',
+        current: '.slider-counter-content__current',
+        total: '.slider-counter-content__total',
+      },
+      slidesToShow: 1,
+      infinity: true,
+    });
+  },
 });
 carouselSliderRepairTypesTabs.init();
 
-const carouselSliderRepairTypes = new CarouselSlider({
-  main: '.repair-types-slider',
-  wrap: '.types-repair1',
-  prev: '#repair-types-arrow_left',
-  next: '#repair-types-arrow_right',
-  overflow: true,
-  pagination: {
-    type: 'counter',
-    current: '.slider-counter-content__current',
-    total: '.slider-counter-content__total',
-  },
-  slidesToShow: 1,
-  infinity: true,
+const carouselSliderRepairTypesTabsButton = new CarouselSlider({
+  main: '.repair-types-nav',
+  wrap: '.nav-list-repair',
+  prev: '#nav-arrow-repair-left_base',
+  next: '#nav-arrow-repair-right_base',
+  slidesToShow: 3,
+  responsive: [{
+      breackpoint: 768,
+      slidesToShow: 2
+    },
+    {
+      breackpoint: 575,
+      slidesToShow: 1
+    },
+  ]
 });
-carouselSliderRepairTypes.init();
+
+carouselSliderRepairTypesTabsButton.init();
+
+if (document.documentElement.clientWidth <= 1024) {
+  carouselSliderRepairTypesTabsButton.addStyle();
+} else {
+  carouselSliderRepairTypesTabsButton.clearStyle();
+}
+
+window.addEventListener('resize', () => {
+  if (document.documentElement.clientWidth <= 1024) {
+    carouselSliderRepairTypesTabsButton.addStyle();
+  } else {
+    carouselSliderRepairTypesTabsButton.clearStyle();
+  }
+});
