@@ -6,6 +6,7 @@ import phoneMask from './modules/phoneMask';
 import sendForm from './modules/sendForm';
 import formulaPopup from './modules/formulaPopup';
 import CarouselSlider from './modules/carouselSlider';
+import slider from './modules/slider';
 
 openNumber();
 popupMenu();
@@ -24,7 +25,7 @@ openModal({
 });
 phoneMask('+7 (___) ___-__-__');
 sendForm();
-const carouselSlider = new CarouselSlider({
+const carouselSliderFormula = new CarouselSlider({
   main: '.formula-slider-wrap',
   wrap: '.formula-slider',
   prev: '#formula-arrow_left',
@@ -32,6 +33,7 @@ const carouselSlider = new CarouselSlider({
   position: -1,
   slidesToShow: 3,
   slidesToHighlight: 1,
+  overflow: true,
   infinity: true,
   responsive: [{
       breackpoint: 768,
@@ -40,5 +42,34 @@ const carouselSlider = new CarouselSlider({
 
   ]
 });
-carouselSlider.init();
+carouselSliderFormula.init();
 formulaPopup();
+
+const carouselSliderRepairTypesTabs = new CarouselSlider({
+  main: '.repair-types-slider',
+  wrap: '.slider-wrapper',
+  overflow: true,
+  slidesToShow: 1,
+  pagination: {
+    type: 'button',
+    wrap: '.nav-list-repair',
+    active: '.active',
+  },
+});
+carouselSliderRepairTypesTabs.init();
+
+const carouselSliderRepairTypes = new CarouselSlider({
+  main: '.repair-types-slider',
+  wrap: '.types-repair1',
+  prev: '#repair-types-arrow_left',
+  next: '#repair-types-arrow_right',
+  overflow: true,
+  pagination: {
+    type: 'counter',
+    current: '.slider-counter-content__current',
+    total: '.slider-counter-content__total',
+  },
+  slidesToShow: 1,
+  infinity: true,
+});
+carouselSliderRepairTypes.init();
