@@ -267,9 +267,12 @@ class CarouselSlider {
   }
 
   highlightСurrent() {
-    const beginSlideIndex = this.options.position + Math.floor((this.slidesToShow - this.slidesToHighlight) / 2),
-      endSlideIndex = this.options.position + Math.floor(this.slidesToShow - this.slidesToHighlight / 2),
-      slidesToShow = [...this.wrap.children].slice(beginSlideIndex, endSlideIndex);
+    let beginSlideIndex = this.options.position + Math.floor((this.slidesToShow - this.slidesToHighlight) / 2),
+      endSlideIndex = this.options.position + Math.floor(this.slidesToShow - this.slidesToHighlight / 2);
+    if (beginSlideIndex === endSlideIndex) {
+      endSlideIndex++;
+    }
+    const slidesToShow = [...this.wrap.children].slice(beginSlideIndex, endSlideIndex);
 
     [...this.wrap.children].forEach(slide => {
       slide.style.transform = '';
