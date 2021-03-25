@@ -1,25 +1,29 @@
-const formulaPopup = () => {
-  const icons = [...document.querySelectorAll('.formula-item__icon')],
-    iconsInner = [...document.querySelectorAll('.formula-item__icon-inner')],
-    hints = [...document.querySelectorAll('.formula-item-popup')],
-    rowSelector = '.row';
+const hints = ({
+  iconsSelector,
+  iconsInnerSelector,
+  hintsSelector,
+  mainWrapperSelector
+}) => {
+  const icons = [...document.querySelectorAll(iconsSelector)],
+    iconsInner = [...document.querySelectorAll(iconsInnerSelector)],
+    hints = [...document.querySelectorAll(hintsSelector)];
 
   const setDownHintStyle = hint => {
     const style = document.createElement('style');
     style.classList.add('down-hint-style');
     style.textContent = `
-      .formula-item-popup {
+      ${hintsSelector} {
         z-index: 100;
       }
-      .formula-item-popup:before {
+      ${hintsSelector}:before {
         -webkit-transform: rotate(180deg) translateY(20px);
         transform: rotate(180deg) translateY(20px); 
       }
     `;
     document.head.append(style);
 
-    if (hint.closest(rowSelector)) {
-      hint.closest(rowSelector).style.zIndex = '99';
+    if (hint.closest(mainWrapperSelector)) {
+      hint.closest(mainWrapperSelector).style.zIndex = '99';
     }
   };
 
@@ -29,8 +33,8 @@ const formulaPopup = () => {
       style.remove();
     }
     if (hint) {
-      if (hint.closest(rowSelector)) {
-        hint.closest(rowSelector).style.zIndex = '';
+      if (hint.closest(mainWrapperSelector)) {
+        hint.closest(mainWrapperSelector).style.zIndex = '';
       }
     }
   };
@@ -120,4 +124,4 @@ const formulaPopup = () => {
 
 };
 
-export default formulaPopup;
+export default hints;

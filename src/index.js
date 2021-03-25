@@ -6,7 +6,7 @@ import scroll from './modules/scroll';
 import openModal from './modules/openModal';
 import phoneMask from './modules/phoneMask';
 import sendForm from './modules/sendForm';
-import formulaPopup from './modules/formulaPopup';
+import hints from './modules/hints';
 import CarouselSlider from './modules/carouselSlider';
 import slider from './modules/slider';
 
@@ -46,7 +46,12 @@ const carouselSliderFormula = new CarouselSlider({
   ]
 });
 carouselSliderFormula.init();
-formulaPopup();
+hints({
+  iconsSelector: '.formula-item__icon',
+  iconsInnerSelector: '.formula-item__icon-inner',
+  hintsSelector: '.formula-item-popup',
+  mainWrapperSelector: '.row',
+});
 
 const carouselSliderRepairTypesTabs = new CarouselSlider({
   main: '.repair-types-slider',
@@ -201,3 +206,10 @@ const carouselSliderTransparencyModal = new CarouselSlider({
   },
 });
 carouselSliderTransparencyModal.init();
+
+hints({
+  iconsSelector: '.problems-item__icon',
+  iconsInnerSelector: '.problems-item__icon-inner',
+  hintsSelector: '.problems-item-popup',
+  mainWrapperSelector: '.row',
+});

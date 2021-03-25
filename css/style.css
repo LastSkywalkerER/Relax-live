@@ -101,6 +101,12 @@ input {
 }
 
 button,
+button:active,
+button:focus {
+  outline: none;
+}
+
+button,
 select {
   text-transform: none;
 }
@@ -118,13 +124,6 @@ button::-moz-focus-inner,
 [type="submit"]::-moz-focus-inner {
   border-style: none;
   padding: 0;
-}
-
-button:-moz-focusring,
-[type="button"]:-moz-focusring,
-[type="reset"]:-moz-focusring,
-[type="submit"]:-moz-focusring {
-  outline: 1px dotted ButtonText;
 }
 
 fieldset {
@@ -1225,7 +1224,7 @@ template,
   -webkit-transform: translate3d(0, -5px, 0);
   transform: translate3d(0, -5px, 0);
   opacity: 0.1;
-  transition: 0.5s;
+  transition: 0.2s;
 }
 .formula-item-popup p {
   padding-bottom: 15px;
@@ -2764,6 +2763,7 @@ div.wave-block:nth-child(17):after {
   -webkit-transform: translate3d(0, -5px, 0);
   transform: translate3d(0, -5px, 0);
   opacity: 0.5;
+  transition: 200ms;
 }
 @media (max-width: 1024px) {
   .problems-item-popup {
@@ -2796,16 +2796,16 @@ div.wave-block:nth-child(17):after {
 .problems-item-popup-1 {
   min-height: 344px;
   padding-top: 35px;
-  top: 245px;
+  /* top: 245px; */
 }
 @media (min-width: 1025px) {
   .problems-item-popup-1 {
-    top: 140px;
+    /* top: 140px; */
   }
 }
 @media (max-width: 575px) {
   .problems-item-popup-1 {
-    top: 190px;
+    /* top: 190px; */
   }
 }
 .problems-item-popup-1:before {
@@ -2817,8 +2817,6 @@ div.wave-block:nth-child(17):after {
   content: "";
   background: url("../images/problems/popup_bg_1.svg") no-repeat;
   background-size: contain;
-  -webkit-transform: rotate(180deg);
-  transform: rotate(180deg);
   z-index: -1;
 }
 @media (max-width: 575px) {
