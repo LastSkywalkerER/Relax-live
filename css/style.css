@@ -6219,6 +6219,8 @@ div.wave-block:nth-child(17):after {
   margin-top: 0;
   border-radius: 0 20px 0 0;
   overflow: hidden;
+  width: 100%;
+  height: 100%;
 }
 @media (max-width: 1024px) {
   .popup-design-slider {
@@ -8592,6 +8594,12 @@ strong {
 }
 
 .slide-wrapper__designs-slider {
+  width: 100%;
+  height: 100%;
+}
+
+.slider-wrapper__popup-design-slider,
+.slide-wrapper__popup-design-slider {
   width: 100%;
   height: 100%;
 }

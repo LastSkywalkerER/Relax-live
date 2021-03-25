@@ -288,3 +288,46 @@ const carouselSliderDesignTabsButton = new CarouselSlider({
 });
 
 carouselSliderDesignTabsButton.init();
+
+openModal({
+  modalWrapSelector: '.popup-design',
+  modalWindowSelector: '.popup-dialog-design',
+  openButtonsSelector: '#open-design-modal',
+  closeButtonSelector: '.close'
+});
+
+const carouselSliderDesignModal = new CarouselSlider({
+  main: '.popup-design-slider',
+  wrap: '.slider-wrapper__popup-design-slider',
+  overflow: true,
+  slidesToShow: 1,
+  pagination: [{
+    type: 'button',
+    wrap: '#nav-list-popup-designs',
+    active: '.active',
+  }],
+  description: {
+    wrap: '.popup-design-tab__item',
+    rows: '.popup-design-text',
+    active: '.visible-content-block',
+  },
+  sliderInSlider: ({
+    nextSliderSelector,
+  }) => {
+    return new CarouselSlider({
+      main: '.popup-design-slider',
+      wrap: nextSliderSelector,
+      prev: '#popup_design_left',
+      next: '#popup_design_right',
+      overflow: true,
+      slidesToShow: 1,
+      pagination: [{
+        type: 'counter',
+        wrap: '#popup-designs-counter',
+        current: '.slider-counter-content__current',
+        total: '.slider-counter-content__total',
+      }],
+    });
+  },
+});
+carouselSliderDesignModal.init();
