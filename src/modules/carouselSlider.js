@@ -339,13 +339,13 @@ class CarouselSlider {
       if (!this.options.infinity) {
         if (this.options.position === 0) {
           this.prev.style.visibility = 'hidden';
-          this.next.style.visibility = 'visible';
+          this.next.style.visibility = 'inherit';
         } else if (this.options.position === this.options.maxPosition) {
-          this.prev.style.visibility = 'visible';
+          this.prev.style.visibility = 'inherit';
           this.next.style.visibility = 'hidden';
         } else {
-          this.prev.style.visibility = 'visible';
-          this.next.style.visibility = 'visible';
+          this.prev.style.visibility = 'inherit';
+          this.next.style.visibility = 'inherit';
         }
       }
     }
