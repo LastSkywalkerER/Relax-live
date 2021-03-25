@@ -1628,7 +1628,7 @@ template,
     width: 266px;
   }
   .repair-types-nav__item:nth-child(5) svg {
-    width: 266px;
+    width: 240px;
   }
 }
 @media (max-width: 575px) {
@@ -6895,7 +6895,7 @@ div.wave-block:nth-child(17):after {
   transition: 0.4s;
 }
 .nav-list-repair {
-  min-width: 390px;
+  min-width: 100%;
   display: block;
 }
 @media (max-width: 1024px) {

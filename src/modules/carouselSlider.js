@@ -383,6 +383,7 @@ class CarouselSlider {
 
   updateOptions() {
     this.options.widthSlide = Math.floor(100 / this.slidesToShow);
+    this.options.maxPosition = this.slides.length - this.slidesToShow;
     this.addStyle();
   }
 
