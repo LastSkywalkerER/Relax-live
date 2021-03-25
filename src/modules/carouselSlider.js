@@ -15,6 +15,7 @@ class CarouselSlider {
     minBreakpoint,
     maxBreakpoint,
     sliderInSlider,
+    description,
   }) {
     try {
       this.main = document.querySelector(main);
@@ -42,6 +43,7 @@ class CarouselSlider {
     this.maxBreakpoint = maxBreakpoint;
     this.minBreakpoint = minBreakpoint;
     this.createNewSliderInSlider = sliderInSlider;
+    this.description = description;
 
     this.key = wrap.slice(1);
     this.checkResponse = () => {};
@@ -72,20 +74,7 @@ class CarouselSlider {
       this.controlSlider();
     }
 
-    if (this.pagination) {
-      if (this.pagination.type === 'counter') {
-        this.paginationCurrent = document.querySelector(this.pagination.current);
-        this.paginationTotal = document.querySelector(this.pagination.total);
-        this.controlPaginationCounter();
-      }
-      if (this.pagination.type === 'button') {
-        this.butonsWrap = document.querySelector(this.pagination.wrap);
-        this.buttons = [...document.querySelector(this.pagination.wrap).children];
-        this.controlPaginationButton();
-      }
-    }
-
-
+    this.pagainationInit();
 
     if (this.slidesToHighlight) {
       this.highlightСurrent();
@@ -96,8 +85,47 @@ class CarouselSlider {
       this.createSliderInSlider('.' + this.slides[this.options.position].children[0].classList[0]);
     }
 
+    if (this.description) {
+      this.descriptionInit();
+    }
+
     this.disableAnimation();
     this.moveSlides();
+  }
+
+  descriptionInit() {
+    this.descriptionSlides = [...document.querySelector(this.description.wrap).querySelectorAll(this.description.rows)];
+    this.setCurrentDescriptionSlide();
+  }
+
+  setCurrentDescriptionSlide() {
+    const absolutePosition = this.getAbsolutePosition();
+    this.descriptionSlides.forEach(slide => {
+      slide.style.display = 'none';
+      slide.style.opacity = '0';
+    });
+    this.descriptionSlides.forEach((slide, index) => {
+      if (index === absolutePosition) {
+        slide.style.display = 'block';
+        slide.style.opacity = '1';
+      }
+    });
+
+  }
+
+  pagainationInit() {
+    if (this.pagination) {
+      if (this.pagination.type === 'counter') {
+        this.paginationCurrent = document.querySelector(this.pagination.wrap).querySelector(this.pagination.current);
+        this.paginationTotal = document.querySelector(this.pagination.wrap).querySelector(this.pagination.total);
+        this.controlPaginationCounter();
+      }
+      if (this.pagination.type === 'button') {
+        this.butonsWrap = document.querySelector(this.pagination.wrap);
+        this.buttons = [...document.querySelector(this.pagination.wrap).children];
+        this.controlPaginationButton();
+      }
+    }
   }
 
   checkWidthStyle() {
@@ -224,11 +252,16 @@ class CarouselSlider {
     }
   }
 
-  controlPaginationCounter() {
-    let counter = this.options.position + 1;
-    while ((counter - this.slides.length) > 0) {
-      counter -= this.slides.length;
+  getAbsolutePosition() {
+    let absolutePosition = this.options.position + 1;
+    while ((absolutePosition - this.slides.length) > 0) {
+      absolutePosition -= this.slides.length;
     }
+    return absolutePosition;
+  }
+
+  controlPaginationCounter() {
+    const counter = this.getAbsolutePosition();
     this.paginationCurrent.textContent = counter;
     this.paginationTotal.textContent = this.slides.length;
   }
@@ -277,7 +310,7 @@ class CarouselSlider {
     }
     this.controlPagination();
 
-    if (!this.infinity) {
+    if (!this.options.infinity) {
       if (this.options.position === 0) {
         this.prev.style.visibility = 'hidden';
         this.next.style.visibility = 'visible';
@@ -288,6 +321,10 @@ class CarouselSlider {
         this.prev.style.visibility = 'visible';
         this.next.style.visibility = 'visible';
       }
+    }
+
+    if (this.description) {
+      this.setCurrentDescriptionSlide();
     }
   }
 

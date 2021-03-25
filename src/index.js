@@ -70,6 +70,7 @@ const carouselSliderRepairTypesTabs = new CarouselSlider({
       overflow: true,
       pagination: {
         type: 'counter',
+        wrap: '#repair-counter',
         current: '.slider-counter-content__current',
         total: '.slider-counter-content__total',
       },
@@ -120,3 +121,48 @@ const carouselSliderPortfolio = new CarouselSlider({
 });
 
 carouselSliderPortfolio.init();
+
+const carouselSliderPortfolioMobile = new CarouselSlider({
+  main: '.portfolio-slider-mobile',
+  wrap: '.slider-wrapper__portfolio-slider-mobile',
+  prev: '#portfolio-arrow-mobile_left',
+  next: '#portfolio-arrow-mobile_right',
+  overflow: true,
+  pagination: {
+    type: 'counter',
+    wrap: '#portfolio-counter',
+    current: '.slider-counter-content__current',
+    total: '.slider-counter-content__total',
+  },
+  slidesToShow: 1,
+  infinity: true,
+  maxBreakpoint: 574,
+});
+carouselSliderPortfolioMobile.init();
+
+openModal({
+  modalWrapSelector: '.popup-portfolio',
+  modalWindowSelector: '.popup-dialog-portfolio',
+  openButtonsSelector: '.portfolio-slider__slide-frame',
+  closeButtonSelector: '.close'
+});
+
+const carouselSliderPortfolioModal = new CarouselSlider({
+  main: '.popup-portfolio-slider-wrap',
+  wrap: '.popup-portfolio-slider',
+  prev: '#popup_portfolio_left',
+  next: '#popup_portfolio_right',
+  pagination: {
+    type: 'counter',
+    wrap: '#popup-portfolio-counter',
+    current: '.slider-counter-content__current',
+    total: '.slider-counter-content__total',
+  },
+  description: {
+    wrap: '.popup-dialog-portfolio',
+    rows: '.popup-portfolio-text',
+  },
+  slidesToShow: 1,
+  infinity: true,
+});
+carouselSliderPortfolioModal.init();

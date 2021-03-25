@@ -6,18 +6,19 @@ const openModal = ({
 }) => {
   const modalWrap = document.querySelector(modalWrapSelector),
     openButtons = document.querySelectorAll(openButtonsSelector),
-    modalWindow = document.querySelector(modalWindowSelector);
+    modalWindow = document.querySelector(modalWindowSelector),
+    step = 10;
 
   const openModal = () => {
     let scale = 0;
 
     modalWrap.style.visibility = 'visible';
-    modalWindow.style.transform = `scale(${scale})`;
+    modalWindow.style.transform = `scale(${scale/100})`;
 
     const openAnimation = () => {
-      scale += 0.1;
-      modalWindow.style.transform = `scale(${scale})`;
-      if (scale <= 1) {
+      scale += step;
+      modalWindow.style.transform = `scale(${scale/100})`;
+      if (scale < 100) {
         requestAnimationFrame(openAnimation);
       }
     };
@@ -28,14 +29,14 @@ const openModal = ({
   };
 
   const closeModal = () => {
-    let scale = 1;
+    let scale = 100;
 
-    modalWindow.style.transform = `scale(${scale})`;
+    modalWindow.style.transform = `scale(${scale/100})`;
 
     const closeAnimation = () => {
-      scale -= 0.1;
-      modalWindow.style.transform = `scale(${scale})`;
-      if (scale >= 0.1) {
+      scale -= step;
+      modalWindow.style.transform = `scale(${scale/100})`;
+      if (scale >= 10) {
         requestAnimationFrame(closeAnimation);
       } else {
         modalWrap.style.visibility = '';
