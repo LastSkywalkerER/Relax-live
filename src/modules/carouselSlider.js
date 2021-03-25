@@ -128,16 +128,21 @@ class CarouselSlider {
 
   pagainationInit() {
     if (this.pagination) {
-      if (this.pagination.type === 'counter') {
-        this.paginationCurrent = document.querySelector(this.pagination.wrap).querySelector(this.pagination.current);
-        this.paginationTotal = document.querySelector(this.pagination.wrap).querySelector(this.pagination.total);
-        this.controlPaginationCounter();
-      }
-      if (this.pagination.type === 'button') {
-        this.butonsWrap = document.querySelector(this.pagination.wrap);
-        this.buttons = [...this.butonsWrap.children];
-        this.controlPaginationButton();
-      }
+      this.pagination.forEach(pagination => {
+        if (pagination.type === 'counter') {
+          this.paginationCurrent = document.querySelector(pagination.wrap).querySelector(pagination.current);
+          this.paginationTotal = document.querySelector(pagination.wrap).querySelector(pagination.total);
+          this.paginationCounter = pagination;
+          this.controlPaginationCounter();
+        }
+        if (pagination.type === 'button') {
+          this.butonsWrap = document.querySelector(pagination.wrap);
+          this.buttons = [...this.butonsWrap.children];
+          this.paginationButton = pagination;
+          this.controlPaginationButton();
+        }
+      });
+
     }
   }
 
@@ -260,10 +265,8 @@ class CarouselSlider {
   }
 
   controlPagination() {
-    if (this.pagination) {
-      if (this.pagination.type === 'counter') {
-        this.controlPaginationCounter();
-      }
+    if (this.paginationCounter) {
+      this.controlPaginationCounter();
     }
   }
 
@@ -284,9 +287,9 @@ class CarouselSlider {
   controlPaginationButton() {
     this.butonsWrap.addEventListener('click', event => {
       this.buttons.forEach((buton, index) => {
-        buton.classList.remove(this.pagination.active.slice(1));
+        buton.classList.remove(this.paginationButton.active.slice(1));
         if (event.target === buton || buton.contains(event.target)) {
-          buton.classList.add(this.pagination.active.slice(1));
+          buton.classList.add(this.paginationButton.active.slice(1));
           this.options.position = index;
           this.setCurrentSlide();
           if (this.createNewSliderInSlider) {

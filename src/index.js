@@ -58,11 +58,11 @@ const carouselSliderRepairTypesTabs = new CarouselSlider({
   wrap: '.slider-wrapper',
   overflow: true,
   slidesToShow: 1,
-  pagination: {
+  pagination: [{
     type: 'button',
     wrap: '.nav-list-repair',
     active: '.active',
-  },
+  }],
   sliderInSlider: ({
     nextSliderSelector,
   }) => {
@@ -72,12 +72,12 @@ const carouselSliderRepairTypesTabs = new CarouselSlider({
       prev: '#repair-types-arrow_left',
       next: '#repair-types-arrow_right',
       overflow: true,
-      pagination: {
+      pagination: [{
         type: 'counter',
         wrap: '#repair-counter',
         current: '.slider-counter-content__current',
         total: '.slider-counter-content__total',
-      },
+      }],
       slidesToShow: 1,
       infinity: true,
     });
@@ -132,12 +132,12 @@ const carouselSliderPortfolioMobile = new CarouselSlider({
   prev: '#portfolio-arrow-mobile_left',
   next: '#portfolio-arrow-mobile_right',
   overflow: true,
-  pagination: {
+  pagination: [{
     type: 'counter',
     wrap: '#portfolio-counter',
     current: '.slider-counter-content__current',
     total: '.slider-counter-content__total',
-  },
+  }],
   slidesToShow: 1,
   infinity: true,
   maxBreakpoint: 574,
@@ -156,12 +156,12 @@ const carouselSliderPortfolioModal = new CarouselSlider({
   wrap: '.popup-portfolio-slider',
   prev: '#popup_portfolio_left',
   next: '#popup_portfolio_right',
-  pagination: {
+  pagination: [{
     type: 'counter',
     wrap: '#popup-portfolio-counter',
     current: '.slider-counter-content__current',
     total: '.slider-counter-content__total',
-  },
+  }],
   description: {
     wrap: '.popup-dialog-portfolio',
     rows: '.popup-portfolio-text',
@@ -197,12 +197,12 @@ const carouselSliderTransparencyModal = new CarouselSlider({
   next: '#transparency_right',
   slidesToShow: 1,
   overflow: true,
-  pagination: {
+  pagination: [{
     type: 'counter',
     wrap: '#transparency-popup-counter',
     current: '.slider-counter-content__current',
     total: '.slider-counter-content__total',
-  },
+  }],
 });
 carouselSliderTransparencyModal.init();
 
@@ -232,11 +232,11 @@ const carouselSliderDesignTabs = new CarouselSlider({
   wrap: '.slider-wrapper__designs-slider',
   overflow: true,
   slidesToShow: 1,
-  pagination: {
+  pagination: [{
     type: 'button',
     wrap: '#designs-list',
     active: '.active',
-  },
+  }],
   description: {
     wrap: '#designs',
     rows: '.preview-block',
@@ -248,14 +248,43 @@ const carouselSliderDesignTabs = new CarouselSlider({
     return new CarouselSlider({
       main: '.designs-slider',
       wrap: nextSliderSelector,
+      prev: '#design_left',
+      next: '#design_right',
       overflow: true,
       slidesToShow: 1,
-      pagination: {
-        type: 'button',
-        wrap: '.preview-block.visible',
-        active: '.preview_active',
-      },
+      pagination: [{
+          type: 'button',
+          wrap: '.preview-block.visible',
+          active: '.preview_active',
+        },
+        {
+          type: 'counter',
+          wrap: '#designs-counter',
+          current: '.slider-counter-content__current',
+          total: '.slider-counter-content__total',
+        }
+      ],
     });
   },
 });
 carouselSliderDesignTabs.init();
+
+const carouselSliderDesignTabsButton = new CarouselSlider({
+  main: '.nav-designs',
+  wrap: '#designs-list',
+  prev: '#nav-arrow-designs_left',
+  next: '#nav-arrow-designs_right',
+  slidesToShow: 3,
+  responsive: [{
+      breackpoint: 768,
+      slidesToShow: 2
+    },
+    {
+      breackpoint: 575,
+      slidesToShow: 1
+    },
+  ],
+  maxBreakpoint: 1024,
+});
+
+carouselSliderDesignTabsButton.init();

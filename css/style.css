@@ -6892,7 +6892,7 @@ div.wave-block:nth-child(17):after {
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
-  min-width: 1076px;
+  /* min-width: 1076px; */
   -webkit-transition: 0.4s;
   transition: 0.4s;
 }
@@ -6934,7 +6934,7 @@ div.wave-block:nth-child(17):after {
 }
 @media (max-width: 575px) {
   .nav-list-designs {
-    min-width: 900px;
+    /* min-width: 900px; */
   }
 }
 .nav-list_vertical {
