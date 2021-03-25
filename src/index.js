@@ -207,6 +207,20 @@ const carouselSliderTransparencyModal = new CarouselSlider({
 });
 carouselSliderTransparencyModal.init();
 
+const carouselSliderProblems = new CarouselSlider({
+  main: '.problems-slider-wrap',
+  wrap: '.problems-slider',
+  prev: '#problems-arrow_left',
+  next: '#problems-arrow_right',
+  slidesToShow: 1,
+  slidesToHighlight: 1,
+  highlightSelector: '.active-item',
+  overflow: true,
+  hideOverflow: true,
+
+});
+carouselSliderProblems.init();
+
 hints({
   iconsSelector: '.problems-item__icon',
   iconsInnerSelector: '.problems-item__icon-inner',

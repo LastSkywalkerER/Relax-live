@@ -11,6 +11,7 @@ class CarouselSlider {
     position = 0,
     slidesToShow = 3,
     slidesToHighlight = 0,
+    highlightSelector,
     responsive,
     minBreakpoint,
     maxBreakpoint,
@@ -33,6 +34,7 @@ class CarouselSlider {
     this.hideOverflow = hideOverflow;
     this.slidesToShow = slidesToShow;
     this.slidesToHighlight = slidesToHighlight;
+    this.highlightSelector = highlightSelector;
     this.options = {
       position,
       infinity,
@@ -379,9 +381,13 @@ class CarouselSlider {
     const slidesToHighlight = [...this.wrap.children].slice(beginSlideIndex, endSlideIndex);
 
     [...this.wrap.children].forEach(slide => {
-      slide.style.transform = '';
-      slide.style.opacity = '';
-      [...slide.children].forEach(item => item.style.zIndex = '');
+      if (!this.highlightSelector) {
+        slide.style.transform = '';
+        slide.style.opacity = '';
+        [...slide.children].forEach(item => item.style.zIndex = '');
+      } else {
+        slide.classList.remove(this.highlightSelector.slice(1));
+      }
     });
 
     if (this.hideOverflow) {
@@ -389,9 +395,13 @@ class CarouselSlider {
     }
 
     slidesToHighlight.forEach(slide => {
-      slide.style.transform = 'scale(1.2)';
-      slide.style.opacity = '1';
-      [...slide.children].forEach(item => item.style.zIndex = '99');
+      if (!this.highlightSelector) {
+        slide.style.transform = 'scale(1.2)';
+        slide.style.opacity = '1';
+        [...slide.children].forEach(item => item.style.zIndex = '99');
+      } else {
+        slide.classList.add(this.highlightSelector.slice(1));
+      }
     });
   }
 
