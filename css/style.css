@@ -3924,7 +3924,7 @@ div.wave-block:nth-child(17):after {
 }
 .reviews-slider {
   height: 314px;
-  overflow: hidden;
+  /* overflow: hidden; */
 }
 .reviews-slider-wrap {
   position: relative;

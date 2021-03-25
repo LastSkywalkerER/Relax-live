@@ -93,7 +93,9 @@ class CarouselSlider {
     }
 
     this.disableAnimation();
-    this.moveSlides();
+    if (this.checkWidthStyle()) {
+      this.setCurrentSlide();
+    }
   }
 
   descriptionInit() {

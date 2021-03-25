@@ -338,3 +338,15 @@ openModal({
   openButtonsSelector: '.consult-button',
   closeButtonSelector: '.close'
 });
+
+const carouselSliderReviews = new CarouselSlider({
+  main: '.reviews-slider',
+  wrap: '.slider-wrapper__reviews-slider',
+  prev: '#reviews-arrow_left',
+  next: '#reviews-arrow_right',
+  slidesToShow: 1,
+  overflow: true,
+  hideOverflow: true,
+
+});
+carouselSliderReviews.init();
