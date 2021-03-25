@@ -368,3 +368,24 @@ const carouselSliderScheme = new CarouselSlider({
   },
 });
 carouselSliderScheme.init();
+
+const carouselSliderPartners = new CarouselSlider({
+  main: '#partners',
+  wrap: '.partners-slider',
+  prev: '#partners-arrow_left',
+  next: '#partners-arrow_right',
+  infinity: true,
+  slidesToShow: 3,
+  responsive: [{
+      breackpoint: 768,
+      slidesToShow: 2
+    },
+    {
+      breackpoint: 575,
+      slidesToShow: 1
+    },
+  ],
+  overflow: true,
+  hideOverflow: true,
+});
+carouselSliderPartners.init();

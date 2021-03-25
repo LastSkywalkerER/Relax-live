@@ -212,11 +212,12 @@ class CarouselSlider {
       flex-wrap: nowrap !important;
       transition: transform 0.5s !important;
       will-change: transform !important;
-      margin: 0 !important;
+      
     }
 
     .glo-slider__item-${this.key} {
       flex: 0 0 ${this.options.widthSlide}% !important;
+      width: ${this.options.widthSlide}% !important;
       margin: auto 0 !important;
       transition: 200ms;
     }
@@ -235,12 +236,13 @@ class CarouselSlider {
     .glo-slider__wrap-${this.key} {
       display: flex !important;
       flex-wrap: nowrap !important;
-      margin: 0 !important;
+      
     }
 
     .glo-slider__item-${this.key} {
       flex: 0 0 ${this.options.widthSlide}% !important;
       margin: auto 0 !important;
+      width: ${this.options.widthSlide}% !important;
     }
     `;
 
