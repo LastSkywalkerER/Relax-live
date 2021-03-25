@@ -4378,7 +4378,7 @@ div.wave-block:nth-child(17):after {
 .msg-active ~ .msg {
   position: relative;
   overflow: hidden;
-  max-height: 100%;
+  max-height: 575px;
   opacity: 1;
   -webkit-transition: all 0.5s ease-in-out;
   transition: all 0.5s ease-in-out;

@@ -8,7 +8,7 @@ import phoneMask from './modules/phoneMask';
 import sendForm from './modules/sendForm';
 import hints from './modules/hints';
 import CarouselSlider from './modules/carouselSlider';
-import slider from './modules/slider';
+import accordion from './modules/accordion';
 
 openNumber();
 popupMenu();
@@ -389,3 +389,10 @@ const carouselSliderPartners = new CarouselSlider({
   hideOverflow: true,
 });
 carouselSliderPartners.init();
+
+accordion({
+  wrapSelector: '.accordion',
+  itemSelector: '.title_block',
+  messageSelector: '.msg',
+  activeSelector: '.msg-active'
+});
