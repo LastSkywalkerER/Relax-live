@@ -12,6 +12,8 @@ class CarouselSlider {
     slidesToShow = 3,
     slidesToHighlight = 0,
     responsive,
+    minBreakpoint,
+    maxBreakpoint,
     sliderInSlider,
   }) {
     try {
@@ -37,6 +39,8 @@ class CarouselSlider {
       maxPosition: this.slides.length - this.slidesToShow,
     };
     this.responsive = responsive;
+    this.maxBreakpoint = maxBreakpoint;
+    this.minBreakpoint = minBreakpoint;
     this.createNewSliderInSlider = sliderInSlider;
 
     this.key = wrap.slice(1);
@@ -45,7 +49,10 @@ class CarouselSlider {
 
   init() {
     this.addGloClass();
-    this.addStyle();
+
+    if (this.checkWidthStyle()) {
+      this.addStyle();
+    }
 
     if (this.responsive) {
       this.responseInit();
@@ -78,6 +85,8 @@ class CarouselSlider {
       }
     }
 
+
+
     if (this.slidesToHighlight) {
       this.highlightСurrent();
     }
@@ -89,6 +98,28 @@ class CarouselSlider {
 
     this.disableAnimation();
     this.moveSlides();
+  }
+
+  checkWidthStyle() {
+
+    if (this.maxBreakpoint && !this.minBreakpoint) {
+      if (document.documentElement.clientWidth <= this.maxBreakpoint) {
+
+        return true;
+      }
+    } else if (!this.maxBreakpoint && this.minBreakpoint) {
+      if (document.documentElement.clientWidth >= this.minBreakpoint) {
+
+        return true;
+      }
+    } else if (this.maxBreakpoint && this.minBreakpoint) {
+      if (document.documentElement.clientWidth >= this.minBreakpoint && document.documentElement.clientWidth <= this.maxBreakpoint) {
+        return true;
+      }
+    } else {
+      return true;
+    }
+    return false;
   }
 
   addMoreSlides() {
@@ -146,7 +177,8 @@ class CarouselSlider {
   }
 
   disableAnimation() {
-    this.style.textContent = `
+    if (this.style) {
+      this.style.textContent = `
     .glo-slider-${this.key} {
       ${this.overflow ? '' : 'overflow-x: hidden !important'};
       position: relative;
@@ -162,7 +194,8 @@ class CarouselSlider {
     }
     `;
 
-    document.head.append(this.style);
+      document.head.append(this.style);
+    }
   }
 
   controlSlider() {
@@ -232,7 +265,9 @@ class CarouselSlider {
   }
 
   setCurrentSlide() {
-    this.addStyle();
+    if (this.checkWidthStyle()) {
+      this.addStyle();
+    }
     this.moveSlides();
     if (this.hideOverflow) {
       this.showSlides();
@@ -241,6 +276,19 @@ class CarouselSlider {
       this.highlightСurrent();
     }
     this.controlPagination();
+
+    if (!this.infinity) {
+      if (this.options.position === 0) {
+        this.prev.style.visibility = 'hidden';
+        this.next.style.visibility = 'visible';
+      } else if (this.options.position === this.options.maxPosition) {
+        this.prev.style.visibility = 'visible';
+        this.next.style.visibility = 'hidden';
+      } else {
+        this.prev.style.visibility = 'visible';
+        this.next.style.visibility = 'visible';
+      }
+    }
   }
 
   prevSlider() {
@@ -384,7 +432,9 @@ class CarouselSlider {
   updateOptions() {
     this.options.widthSlide = Math.floor(100 / this.slidesToShow);
     this.options.maxPosition = this.slides.length - this.slidesToShow;
-    this.addStyle();
+    if (this.checkWidthStyle()) {
+      this.addStyle();
+    }
   }
 
   responseInit() {
@@ -409,6 +459,15 @@ class CarouselSlider {
         this.updateOptions();
       }
       this.setCurrentSlide();
+
+      if (this.checkWidthStyle()) {
+        this.addStyle();
+      } else {
+        if (this.style) {
+          this.clearStyle();
+        }
+      }
+
     };
 
     this.checkResponse();
@@ -426,7 +485,9 @@ class CarouselSlider {
     this.wrap.textContent = '';
     this.slides.forEach(slide => this.wrap.append(slide));
 
-    this.clearStyle();
+    if (this.style) {
+      this.clearStyle();
+    }
 
     this.prev.removeEventListener('click', this.prevSlider.bind(this));
     this.next.removeEventListener('click', this.nextSlider.bind(this));

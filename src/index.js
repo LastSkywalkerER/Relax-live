@@ -94,21 +94,29 @@ const carouselSliderRepairTypesTabsButton = new CarouselSlider({
       breackpoint: 575,
       slidesToShow: 1
     },
-  ]
+  ],
+  maxBreakpoint: 1024,
 });
 
 carouselSliderRepairTypesTabsButton.init();
 
-if (document.documentElement.clientWidth <= 1024) {
-  carouselSliderRepairTypesTabsButton.addStyle();
-} else {
-  carouselSliderRepairTypesTabsButton.clearStyle();
-}
-
-window.addEventListener('resize', () => {
-  if (document.documentElement.clientWidth <= 1024) {
-    carouselSliderRepairTypesTabsButton.addStyle();
-  } else {
-    carouselSliderRepairTypesTabsButton.clearStyle();
-  }
+const carouselSliderPortfolio = new CarouselSlider({
+  main: '.portfolio-slider',
+  wrap: '.slider-wrapper__portfolio-slider',
+  prev: '#portfolio-arrow_left',
+  next: '#portfolio-arrow_right',
+  slidesToShow: 3,
+  overflow: true,
+  responsive: [{
+      breackpoint: 1024,
+      slidesToShow: 2
+    },
+    {
+      breackpoint: 900,
+      slidesToShow: 1
+    },
+  ],
+  minBreakpoint: 575,
 });
+
+carouselSliderPortfolio.init();
