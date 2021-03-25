@@ -166,3 +166,38 @@ const carouselSliderPortfolioModal = new CarouselSlider({
   infinity: true,
 });
 carouselSliderPortfolioModal.init();
+
+const carouselSliderTransparency = new CarouselSlider({
+  main: '.transparency-slider-wrap',
+  wrap: '.transparency-slider',
+  prev: '#transparency-arrow_left',
+  next: '#transparency-arrow_right',
+  overflow: true,
+  hideOverflow: true,
+  slidesToShow: 1,
+  maxBreakpoint: 1024,
+});
+carouselSliderTransparency.init();
+
+openModal({
+  modalWrapSelector: '.popup-transparency',
+  modalWindowSelector: '.popup-dialog-transparency',
+  openButtonsSelector: '.transparency-item__img',
+  closeButtonSelector: '.close'
+});
+
+const carouselSliderTransparencyModal = new CarouselSlider({
+  main: '.popup-transparency-slider',
+  wrap: '.slider-wrapper__popup-transparency-slider',
+  prev: '#transparency_left',
+  next: '#transparency_right',
+  slidesToShow: 1,
+  overflow: true,
+  pagination: {
+    type: 'counter',
+    wrap: '#transparency-popup-counter',
+    current: '.slider-counter-content__current',
+    total: '.slider-counter-content__total',
+  },
+});
+carouselSliderTransparencyModal.init();

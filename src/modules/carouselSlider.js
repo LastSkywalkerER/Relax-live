@@ -64,13 +64,10 @@ class CarouselSlider {
       this.addMoreSlides();
     }
 
-    if (this.prev && this.next) {
-      this.stylizationArrows();
-      this.controlSlider();
-    } else if (this.prev === true && this.next === true) {
+    if (this.prev === true && this.next === true) {
       this.addArrow();
       this.controlSlider();
-    } else {
+    } else if (this.prev && this.next) {
       this.controlSlider();
     }
 
@@ -189,6 +186,7 @@ class CarouselSlider {
     }
     .glo-slider__wrap-${this.key} {
       display: flex !important;
+      flex-wrap: nowrap !important;
       transition: transform 0.5s !important;
       will-change: transform !important;
       margin: 0 !important;
@@ -213,6 +211,7 @@ class CarouselSlider {
     }
     .glo-slider__wrap-${this.key} {
       display: flex !important;
+      flex-wrap: nowrap !important;
       margin: 0 !important;
     }
 
@@ -310,16 +309,18 @@ class CarouselSlider {
     }
     this.controlPagination();
 
-    if (!this.options.infinity) {
-      if (this.options.position === 0) {
-        this.prev.style.visibility = 'hidden';
-        this.next.style.visibility = 'visible';
-      } else if (this.options.position === this.options.maxPosition) {
-        this.prev.style.visibility = 'visible';
-        this.next.style.visibility = 'hidden';
-      } else {
-        this.prev.style.visibility = 'visible';
-        this.next.style.visibility = 'visible';
+    if (this.prev && this.next) {
+      if (!this.options.infinity) {
+        if (this.options.position === 0) {
+          this.prev.style.visibility = 'hidden';
+          this.next.style.visibility = 'visible';
+        } else if (this.options.position === this.options.maxPosition) {
+          this.prev.style.visibility = 'visible';
+          this.next.style.visibility = 'hidden';
+        } else {
+          this.prev.style.visibility = 'visible';
+          this.next.style.visibility = 'visible';
+        }
       }
     }
 
@@ -397,8 +398,13 @@ class CarouselSlider {
   stylizationArrows() {
     this.prev.classList.add('glo-slider__prev');
     this.next.classList.add('glo-slider__next');
-    const style = document.createElement('style');
-    style.textContent = `
+
+    let style = document.getElementById(`glo-slider-arrows`);
+    if (!style) {
+      style = document.createElement('style');
+      style.id = `glo-slider-arrows`;
+
+      style.textContent = `
       .glo-slider__prev,
       .glo-slider__next {
         position: absolute !important;
@@ -417,7 +423,8 @@ class CarouselSlider {
       }
     `;
 
-    document.head.append(style);
+      document.head.append(style);
+    }
   }
 
   addArrow() {
