@@ -6,7 +6,7 @@ const openModal = ({
 }) => {
   const modalWrap = document.querySelector(modalWrapSelector),
     openButtons = document.querySelectorAll(openButtonsSelector),
-    modalWindow = document.querySelector(modalWindowSelector),
+    modalWindow = modalWrap.querySelector(modalWindowSelector),
     step = 10;
 
   const openModal = () => {
@@ -18,6 +18,7 @@ const openModal = ({
     const openAnimation = () => {
       scale += step;
       modalWindow.style.transform = `scale(${scale/100})`;
+      console.log(modalWindow);
       if (scale < 100) {
         requestAnimationFrame(openAnimation);
       }

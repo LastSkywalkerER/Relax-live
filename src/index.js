@@ -331,3 +331,10 @@ const carouselSliderDesignModal = new CarouselSlider({
   },
 });
 carouselSliderDesignModal.init();
+
+openModal({
+  modalWrapSelector: '.popup-consultation',
+  modalWindowSelector: '.feedback-wrap',
+  openButtonsSelector: '.consult-button',
+  closeButtonSelector: '.close'
+});
