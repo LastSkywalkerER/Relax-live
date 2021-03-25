@@ -350,3 +350,21 @@ const carouselSliderReviews = new CarouselSlider({
 
 });
 carouselSliderReviews.init();
+
+const carouselSliderScheme = new CarouselSlider({
+  main: '.scheme-slider',
+  wrap: '.slider-wrapper__scheme-slider',
+  overflow: true,
+  slidesToShow: 1,
+  pagination: [{
+    type: 'button',
+    wrap: '#scheme-list',
+    active: '.active',
+  }],
+  description: {
+    wrap: '.scheme-slider-wrap',
+    rows: '.scheme-description-block',
+    active: '.visible-content-block',
+  },
+});
+carouselSliderScheme.init();
