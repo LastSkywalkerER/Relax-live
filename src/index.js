@@ -63,10 +63,9 @@ const carouselSliderRepairTypesTabs = new CarouselSlider({
     wrap: '.nav-list-repair',
     active: '.active',
   },
-  sliderInSlider: (nextSliderSelector, prevSlider) => {
-    if (prevSlider) {
-      prevSlider.delete();
-    }
+  sliderInSlider: ({
+    nextSliderSelector,
+  }) => {
     return new CarouselSlider({
       main: '.repair-types-slider',
       wrap: nextSliderSelector,
@@ -227,3 +226,36 @@ hints({
   hintsSelector: '.problems-item-popup',
   mainWrapperSelector: '.row',
 });
+
+const carouselSliderDesignTabs = new CarouselSlider({
+  main: '.designs-slider',
+  wrap: '.slider-wrapper__designs-slider',
+  overflow: true,
+  slidesToShow: 1,
+  pagination: {
+    type: 'button',
+    wrap: '#designs-list',
+    active: '.active',
+  },
+  description: {
+    wrap: '#designs',
+    rows: '.preview-block',
+    active: '.visible',
+  },
+  sliderInSlider: ({
+    nextSliderSelector,
+  }) => {
+    return new CarouselSlider({
+      main: '.designs-slider',
+      wrap: nextSliderSelector,
+      overflow: true,
+      slidesToShow: 1,
+      pagination: {
+        type: 'button',
+        wrap: '.preview-block.visible',
+        active: '.preview_active',
+      },
+    });
+  },
+});
+carouselSliderDesignTabs.init();

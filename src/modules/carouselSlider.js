@@ -27,8 +27,8 @@ class CarouselSlider {
       this.init = () => {};
       return;
     }
-    this.next = document.querySelector(next);
-    this.prev = document.querySelector(prev);
+    this.next = next;
+    this.prev = prev;
     this.pagination = pagination;
     this.overflow = overflow;
     this.hideOverflow = hideOverflow;
@@ -52,6 +52,15 @@ class CarouselSlider {
   }
 
   init() {
+    if (this.prev === true && this.next === true) {
+      this.addArrow();
+      this.controlSlider();
+    } else if (this.prev && this.next) {
+      this.next = document.querySelector(this.next);
+      this.prev = document.querySelector(this.prev);
+      this.controlSlider();
+    }
+
     this.addGloClass();
 
     if (this.checkWidthStyle()) {
@@ -66,12 +75,7 @@ class CarouselSlider {
       this.addMoreSlides();
     }
 
-    if (this.prev === true && this.next === true) {
-      this.addArrow();
-      this.controlSlider();
-    } else if (this.prev && this.next) {
-      this.controlSlider();
-    }
+
 
     this.pagainationInit();
 
@@ -98,15 +102,25 @@ class CarouselSlider {
   }
 
   setCurrentDescriptionSlide() {
-    const absolutePosition = this.getAbsolutePosition();
+    const absolutePosition = this.getAbsolutePosition() - 1;
+
     this.descriptionSlides.forEach(slide => {
-      slide.style.display = 'none';
-      slide.style.opacity = '0';
+      if (!this.description.active) {
+        slide.style.display = 'none';
+        slide.style.opacity = '0';
+      } else {
+        slide.classList.remove(this.description.active.slice(1));
+      }
     });
+
     this.descriptionSlides.forEach((slide, index) => {
       if (index === absolutePosition) {
-        slide.style.display = 'block';
-        slide.style.opacity = '1';
+        if (!this.description.active) {
+          slide.style.display = 'block';
+          slide.style.opacity = '1';
+        } else {
+          slide.classList.add(this.description.active.slice(1));
+        }
       }
     });
 
@@ -121,7 +135,7 @@ class CarouselSlider {
       }
       if (this.pagination.type === 'button') {
         this.butonsWrap = document.querySelector(this.pagination.wrap);
-        this.buttons = [...document.querySelector(this.pagination.wrap).children];
+        this.buttons = [...this.butonsWrap.children];
         this.controlPaginationButton();
       }
     }
@@ -271,7 +285,7 @@ class CarouselSlider {
     this.butonsWrap.addEventListener('click', event => {
       this.buttons.forEach((buton, index) => {
         buton.classList.remove(this.pagination.active.slice(1));
-        if (event.target === buton) {
+        if (event.target === buton || buton.contains(event.target)) {
           buton.classList.add(this.pagination.active.slice(1));
           this.options.position = index;
           this.setCurrentSlide();
@@ -285,12 +299,17 @@ class CarouselSlider {
 
   createSliderInSlider(currentSlideSelector) {
 
-    this.sliderInSlider = this.createNewSliderInSlider(currentSlideSelector);
+    this.sliderInSlider = this.createNewSliderInSlider({
+      nextSliderSelector: currentSlideSelector
+    });
     this.sliderInSlider.init();
   }
 
   changeSliderInSlider(currentSlideSelector) {
-    this.sliderInSlider = this.createNewSliderInSlider(currentSlideSelector, this.sliderInSlider);
+    this.sliderInSlider.delete();
+    this.sliderInSlider = this.createNewSliderInSlider({
+      nextSliderSelector: currentSlideSelector,
+    });
     this.sliderInSlider.init();
   }
 
@@ -543,8 +562,10 @@ class CarouselSlider {
       this.clearStyle();
     }
 
-    this.prev.removeEventListener('click', this.prevSlider.bind(this));
-    this.next.removeEventListener('click', this.nextSlider.bind(this));
+    if (this.prev && this.next) {
+      this.prev.removeEventListener('click', this.prevSlider.bind(this));
+      this.next.removeEventListener('click', this.nextSlider.bind(this));
+    }
     document.removeEventListener('keydown', this.setSlideKeys.bind(this));
     window.removeEventListener('resize', this.checkResponse.bind(this));
   }
