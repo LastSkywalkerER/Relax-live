@@ -2,7 +2,8 @@ const sendForm = ({
   errorMessage,
   successMesage,
   successPopup,
-  formsSelector
+  formsSelector,
+  validator,
 }) => {
 
   const forms = [...document.querySelectorAll(formsSelector)];
@@ -154,6 +155,9 @@ const sendForm = ({
   };
 
   forms.forEach(form => {
+    if (validator) {
+      validator(form);
+    }
     form.addEventListener('submit', event => {
       formPostAction(event, form);
     });

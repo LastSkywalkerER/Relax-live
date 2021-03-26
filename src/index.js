@@ -10,23 +10,30 @@ import hints from './modules/hints';
 import CarouselSlider from './modules/carouselSlider';
 import accordion from './modules/accordion';
 import Filter from './modules/filter';
+import Validator from './modules/validator';
 
 openNumber();
+
 popupMenu();
+
 scroll();
+
 openModal({
   modalWrapSelector: '.popup-privacy',
   modalWindowSelector: '.popup-dialog-privacy',
   openButtonsSelector: '.link-privacy',
   closeButtonSelector: '.close'
 });
+
 openModal({
   modalWrapSelector: '.popup-repair-types',
   modalWindowSelector: '.popup-dialog-repair-types',
   openButtonsSelector: '#full-price',
   closeButtonSelector: '.close'
 });
+
 phoneMask('+7 (___) ___-__-__');
+
 sendForm({
   errorMessage: 'Что-то пошло не так...',
   successPopup: () => {
@@ -38,7 +45,28 @@ sendForm({
     });
   },
   formsSelector: 'form',
+  validator: form => {
+    const validator = new Validator({
+      form: form,
+      method: {
+        'phone': [
+          ['notEmpty'],
+          ['pattern', 'phone']
+        ],
+        'email': [
+          ['notEmpty'],
+          ['pattern', 'email']
+        ],
+        'name': [
+          ['notEmpty'],
+          ['pattern', 'name']
+        ]
+      }
+    });
+    validator.init();
+  },
 });
+
 const carouselSliderFormula = new CarouselSlider({
   main: '.formula-slider-wrap',
   wrap: '.formula-slider',
@@ -58,6 +86,7 @@ const carouselSliderFormula = new CarouselSlider({
   ]
 });
 carouselSliderFormula.init();
+
 hints({
   iconsSelector: '.formula-item__icon',
   iconsInnerSelector: '.formula-item__icon-inner',
@@ -114,7 +143,6 @@ const carouselSliderRepairTypesTabsButton = new CarouselSlider({
   ],
   maxBreakpoint: 1024,
 });
-
 carouselSliderRepairTypesTabsButton.init();
 
 const carouselSliderPortfolio = new CarouselSlider({
@@ -135,7 +163,6 @@ const carouselSliderPortfolio = new CarouselSlider({
   ],
   minBreakpoint: 575,
 });
-
 carouselSliderPortfolio.init();
 
 const carouselSliderPortfolioMobile = new CarouselSlider({
@@ -298,7 +325,6 @@ const carouselSliderDesignTabsButton = new CarouselSlider({
   ],
   maxBreakpoint: 1024,
 });
-
 carouselSliderDesignTabsButton.init();
 
 openModal({
@@ -417,5 +443,4 @@ const filter = new Filter({
   dateSelector: '.popup-repair-types-content__head-date',
   searchKey: 'title',
 });
-
 filter.init();
