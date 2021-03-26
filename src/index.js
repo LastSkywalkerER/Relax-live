@@ -415,6 +415,7 @@ const filter = new Filter({
   urlDatabase: './db/db.json',
   titleSelector: '#switch-inner',
   dateSelector: '.popup-repair-types-content__head-date',
+  searchKey: 'title',
 });
 
 filter.init();

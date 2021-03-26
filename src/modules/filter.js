@@ -10,6 +10,7 @@ class Filter {
     nameCardSelector,
     titleSelector,
     dateSelector,
+    searchKey,
   }) {
     this.select = document.querySelector(checkBoxFieldSelector);
     this.cardsWrapper = document.querySelector(cardsWrapperSelector);
@@ -18,31 +19,22 @@ class Filter {
     this.nameCardSelector = nameCardSelector;
     this.title = document.querySelector(titleSelector);
     this.date = document.querySelector(dateSelector);
+    this.searchKey = searchKey;
+    this.selectedKeys = '';
+    this.notFirstLoad = 0;
   }
 
-  // очищаем ключ и получаем все карты и свойства
+  // запуск
   init() {
-    this.searchKey = 'title';
-    this.selectedKeys = [];
-
     this.getData(this.urlDataBase, data => {
       this.renderCheckbox(this.getValues(data, this.searchKey));
     });
     this.listeners();
   }
 
-  // очищаем фильтр и получаем все карты
-  update() {
-    this.selectedKeys = [];
-
-    this.getData(this.urlDataBase, data => {
-      this.renderCards(data);
-    });
-  }
-
-  // запрос на получение карт с сервера или хранилища если есть
+  // запрос на получение данных с сервера при первой загрузке или хранилища если есть
   getData(url, cb) {
-    if (localStorage.getItem('data')) {
+    if (localStorage.getItem('data') && this.notFirstLoad) {
       cb(JSON.parse(localStorage.getItem('data')));
     } else {
       return fetch(url, {
@@ -53,23 +45,11 @@ class Filter {
         referrerPolicy: 'no-referrer'
       }).then(response => response.json()).then(data => {
         cb(data);
+        this.notFirstLoad = 1;
         localStorage.setItem('data', JSON.stringify(data));
       });
 
     }
-  }
-
-  // полчаем все ключи карт без повторений
-  getOptions(heroes) {
-    const values = new Set();
-
-    heroes.forEach(hero => Object.keys(hero).forEach(option => {
-      if (option !== 'photo') {
-        values.add(option);
-      }
-    }));
-
-    return values;
   }
 
   // получение всей информации из объектов по ключу без повторений
@@ -104,7 +84,7 @@ class Filter {
     }, {});
   }
 
-  // отрисовка чекбоксов для фильтрации по имеющимуся набору информации
+  // отрисовка кнопок для фильтрации по имеющимуся набору информации
   renderCheckbox(checkNames) {
     this.select.textContent = '';
     let beginKey = 0;
@@ -127,7 +107,7 @@ class Filter {
     this.initRender(beginKey);
   }
 
-  // отрисовка переданных карт
+  // отрисовка переданной информации
   renderCards(card) {
     this.cardsWrapper.textContent = '';
 
@@ -152,7 +132,7 @@ class Filter {
     });
   }
 
-  // перерисовка карт по фильтру и ключу
+  // перерисовка по фильтру и ключу
   reDrowWithFilter(filter, key) {
     this.getData(this.urlDataBase, data => {
       let filteredData = {};
@@ -178,6 +158,7 @@ class Filter {
     });
   }
 
+  // запускаем отрисовку и меняем заголовок
   initRender(key) {
     this.title.textContent = key;
     this.reDrowWithFilter(key, this.searchKey);
@@ -186,7 +167,6 @@ class Filter {
 
   // добавление прослушки на чекбоксы и карты
   listeners() {
-
     this.select.addEventListener('click', event => {
       if (event.target.tagName.toLowerCase() === 'button') {
         this.initRender(event.target.textContent.trim());
@@ -197,25 +177,6 @@ class Filter {
             buton.classList.add('active');
           }
         })
-      }
-    });
-
-    this.cardsWrapper.addEventListener('click', event => {
-      const card = event.target.closest(this.cardSelector),
-        deletectn = event.target.closest('.delete'),
-        name = card.querySelector(this.nameCardSelector).textContent;
-      if (deletectn) {
-        this.getData(this.urlDataBase, (data) => {
-          data = data.filter(hero => hero.name !== name);
-          addCards.sendJson(data);
-          this.init();
-        });
-
-        return;
-      }
-      if (card) {
-
-        window.location.href = `https://yandex.by/search/?lr=157&oprnd=6064670731&text=${name} marvel`;
       }
     });
   }
