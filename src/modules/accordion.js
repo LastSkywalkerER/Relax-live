@@ -15,19 +15,17 @@ const accordeon = ({
   };
 
   const openAccordion = (index) => {
-    let height = 0;
-
-    closeAccordion(prevIndex);
-    prevIndex = index;
-
     items[index].classList.add(activeSelector.slice(1));
-
   }
 
   wrap.addEventListener('click', event => {
     items.forEach((item, index) => {
       if (item === event.target || item.contains(event.target)) {
-        openAccordion(index);
+        closeAccordion(prevIndex);
+        if (prevIndex !== index) {
+          openAccordion(index);
+        }
+        prevIndex = index;
       }
     });
   });
