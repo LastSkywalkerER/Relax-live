@@ -55,6 +55,13 @@ class Validator {
       }
     };
 
+    if (elem.type === 'checkbox') {
+      if (elem.checked) {
+        return true;
+      } else {
+        return false;
+      }
+    }
     if (this.method) {
       const method = this.method[elem.name];
       if (method) {
@@ -109,15 +116,17 @@ class Validator {
     style.textContent = `
       input.success {
         border: 2 px solid green !important;
+        color: green !important;
       }
       input.error {
         border: 2 px solid red !important;
+        color: red !important;
       }
       .validator-error {
         color: red;
         position: absolute;
-        top: 5px;
-        transform: translateY(-100%);
+        top: 0;
+        transform: translateY(-75%);
         padding: 10px;
         background: white;
         border-radius: 10px;
