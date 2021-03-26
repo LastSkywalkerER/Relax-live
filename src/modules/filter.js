@@ -6,31 +6,29 @@ class Filter {
     checkBoxFieldSelector,
     cardsWrapperSelector,
     urlDatabase,
-    selectOptionSelector,
     cardSelector,
-    nameCardSelector
+    nameCardSelector,
+    titleSelector,
+    dateSelector,
   }) {
     this.select = document.querySelector(checkBoxFieldSelector);
     this.cardsWrapper = document.querySelector(cardsWrapperSelector);
     this.urlDataBase = urlDatabase;
-    this.selectField = document.querySelector(selectOptionSelector);
     this.cardSelector = cardSelector;
     this.nameCardSelector = nameCardSelector;
-
-    this.init();
-    this.listeners();
+    this.title = document.querySelector(titleSelector);
+    this.date = document.querySelector(dateSelector);
   }
 
   // очищаем ключ и получаем все карты и свойства
   init() {
-    this.searchKey = 'movies';
+    this.searchKey = 'title';
     this.selectedKeys = [];
 
     this.getData(this.urlDataBase, data => {
-      this.renderCards(data);
       this.renderCheckbox(this.getValues(data, this.searchKey));
-      this.renderSelect(this.getOptions(data));
     });
+    this.listeners();
   }
 
   // очищаем фильтр и получаем все карты
@@ -39,25 +37,25 @@ class Filter {
 
     this.getData(this.urlDataBase, data => {
       this.renderCards(data);
-      this.renderCheckbox(this.getValues(data, this.searchKey));
     });
   }
 
   // запрос на получение карт с сервера или хранилища если есть
-  async getData(url, cb) {
+  getData(url, cb) {
     if (localStorage.getItem('data')) {
       cb(JSON.parse(localStorage.getItem('data')));
     } else {
-      const response = await fetch(url, {
+      return fetch(url, {
         method: 'GET',
         mode: 'cors',
         cache: 'no-cache',
         redirect: 'follow',
         referrerPolicy: 'no-referrer'
+      }).then(response => response.json()).then(data => {
+        cb(data);
+        localStorage.setItem('data', JSON.stringify(data));
       });
-      const data = await response.json();
-      cb(data);
-      localStorage.setItem('data', JSON.stringify(data));
+
     }
   }
 
@@ -106,71 +104,49 @@ class Filter {
     }, {});
   }
 
-  // выводим все свойства карт в селект
-  renderSelect(options) {
-    this.selectField.textContent = '';
-    const box = document.createElement('option');
-    box.textContent = 'Категория';
-    this.selectField.append(box);
-    options.forEach(item => {
-      const box = document.createElement('option');
-      box.value = item;
-      box.textContent = item;
-      this.selectField.append(box);
-    });
-  }
-
   // отрисовка чекбоксов для фильтрации по имеющимуся набору информации
   renderCheckbox(checkNames) {
     this.select.textContent = '';
-    checkNames.forEach(item => {
-      const box = document.createElement('div');
-      box.classList.add('heroes-checkbox');
+    let beginKey = 0;
+    checkNames.forEach((item) => {
+      const box = document.createElement('button');
+
+      if (beginKey === 0) {
+        beginKey = item;
+      }
+
+      box.classList.add('button_o');
+      box.classList.add('popup-repair-types-nav__item');
       box.innerHTML = `
-                <input
-                  type="checkbox"
-                  class="checkbox custom-checkbox"
-                  id="${item}"
-                  value="${item}"
-                />
-                <label for="${item}">${item}</label>
-                `;
+        ${item}
+      `;
       this.select.append(box);
     });
+
+    this.buttons = [...this.select.querySelectorAll('.popup-repair-types-nav__item')];
+    this.initRender(beginKey);
   }
 
   // отрисовка переданных карт
-  renderCards(cards) {
+  renderCards(card) {
     this.cardsWrapper.textContent = '';
 
-    cards.forEach(cardData => {
-      const card = document.createElement('div');
-      card.classList.add('heroes-card');
+    card.priceList.forEach(cardData => {
+      const card = document.createElement('tr');
+      card.classList.add('mobile-row');
       card.innerHTML = `
-            <img src="${cardData.photo.replace(/\/$/, '')}"
-            alt=""
-            class="heroes-bckg"
-            />
-            <button class="delete">X</button>
-            <span class="heroes-name">${cardData.name}</span>
-            <div class="heroes-propertie-block">
-            </div>
-            `;
-      const cardDataBlock = card.querySelector('.heroes-propertie-block');
-
-      for (let key in cardData) {
-        if (typeof cardData[key] === 'string' && cardData[key].split(' ').length === 1) {
-          cardData[key] = cardData[key].slice(0, 1).toUpperCase() + cardData[key].slice(1).toLowerCase();
-        }
-
-        if (key !== 'name' && key !== 'photo') {
-          const p = document.createElement('p');
-          p.classList.add('heroes-propertie');
-          p.innerHTML = `<span>${key.toUpperCase()} </span> <span>${cardData[key]}</span>`;
-
-          cardDataBlock.append(p);
-        }
-      }
+        <td class="repair-types-name">
+          ${cardData.typeService}
+        </td>
+        <td class="mobile-col-title tablet-hide desktop-hide">
+          Ед.измерения
+        </td>
+        <td class="mobile-col-title tablet-hide desktop-hide">
+          Цена за ед.
+        </td>
+        <td class="repair-types-value">${cardData.units[0]}<sup>${cardData.units[1]}</sup></td>
+        <td class="repair-types-value">${cardData.cost} руб.</td>
+      `;
 
       this.cardsWrapper.append(card);
     });
@@ -179,23 +155,22 @@ class Filter {
   // перерисовка карт по фильтру и ключу
   reDrowWithFilter(filter, key) {
     this.getData(this.urlDataBase, data => {
-      const filteredData = data.filter(obj => {
-        if (obj[key]) {
-          return filter.every(item => {
-            let reg = new RegExp(`(,|\\b)${item}(,|\\b)`, `gi`);
-            return reg.test(obj[key]);
-          });
+      let filteredData = {};
+
+      data.forEach(obj => {
+        if (obj.date) {
+          this.date.innerHTML = `${obj.date} <i><i></i></i>`;
         }
-        return false;
+        if (obj[key] === filter) {
+          filteredData = obj;
+        }
       });
 
-      if (filteredData.length) {
+      if (filteredData) {
         this.renderCards(filteredData);
       } else {
         const emptyObj = [{
-          name: 'UNIVERSAL',
-          option: 'not found heroes with this options',
-          photo: 'dbImage/Universal.jpg'
+          title: 'Ничего не найдено',
         }];
         this.renderCards(emptyObj);
 
@@ -203,21 +178,25 @@ class Filter {
     });
   }
 
+  initRender(key) {
+    this.title.textContent = key;
+    this.reDrowWithFilter(key, this.searchKey);
+
+  }
+
   // добавление прослушки на чекбоксы и карты
   listeners() {
-    this.selectField.addEventListener('change', () => {
-      this.searchKey = this.selectField.value;
-      this.update();
-    })
 
-    this.select.addEventListener('change', event => {
-      if (event.target.checked) {
-        this.selectedKeys.push(event.target.value);
-        this.reDrowWithFilter(this.selectedKeys, this.searchKey);
-      } else {
+    this.select.addEventListener('click', event => {
+      if (event.target.tagName.toLowerCase() === 'button') {
+        this.initRender(event.target.textContent.trim());
 
-        this.selectedKeys = this.selectedKeys.filter(item => item !== event.target.value);
-        this.reDrowWithFilter(this.selectedKeys, this.searchKey);
+        this.buttons.forEach(buton => {
+          buton.classList.remove('active');
+          if (buton === event.target) {
+            buton.classList.add('active');
+          }
+        })
       }
     });
 
