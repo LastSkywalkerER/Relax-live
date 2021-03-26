@@ -1,7 +1,11 @@
-const sendForm = () => {
-  const errorMessage = 'Что-то пошло не так...',
-    successMesage = 'Спасибо! Мы скоро с вами свяжемся';
-  const forms = [...document.querySelectorAll('form')];
+const sendForm = ({
+  errorMessage,
+  successMesage,
+  successPopup,
+  formsSelector
+}) => {
+
+  const forms = [...document.querySelectorAll(formsSelector)];
   const statusMessage = document.createElement('div');
 
   const setStyle = () => {
@@ -131,10 +135,15 @@ const sendForm = () => {
 
     postData(body).then(request => {
       if (request.status === 200) {
-        statusMessage.textContent = successMesage;
-        setTimeout(() => {
+        if (successMesage) {
+          statusMessage.textContent = successMesage;
+          setTimeout(() => {
+            statusMessage.remove();
+          }, 3000);
+        } else if (successPopup) {
           statusMessage.remove();
-        }, 3000);
+          successPopup();
+        }
       } else {
         throw new Error(`Exception status ${request.status}`);
       }

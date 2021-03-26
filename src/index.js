@@ -26,7 +26,18 @@ openModal({
   closeButtonSelector: '.close'
 });
 phoneMask('+7 (___) ___-__-__');
-sendForm();
+sendForm({
+  errorMessage: 'Что-то пошло не так...',
+  successPopup: () => {
+    openModal({
+      modalWrapSelector: '.popup-thank',
+      modalWindowSelector: '.popup-thank-bg',
+      closeButtonSelector: '.close',
+      timer: 3,
+    });
+  },
+  formsSelector: 'form',
+});
 const carouselSliderFormula = new CarouselSlider({
   main: '.formula-slider-wrap',
   wrap: '.formula-slider',

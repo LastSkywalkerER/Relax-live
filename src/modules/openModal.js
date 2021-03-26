@@ -2,14 +2,15 @@ const openModal = ({
   modalWrapSelector,
   modalWindowSelector,
   openButtonsSelector,
-  closeButtonSelector
+  closeButtonSelector,
+  timer,
 }) => {
   const modalWrap = document.querySelector(modalWrapSelector),
     openButtons = document.querySelectorAll(openButtonsSelector),
     modalWindow = modalWrap.querySelector(modalWindowSelector),
     step = 10;
 
-  const openModal = () => {
+  const open = () => {
     let scale = 0;
 
     modalWrap.style.visibility = 'visible';
@@ -28,7 +29,7 @@ const openModal = ({
     modalWrap.addEventListener('click', checkClose);
   };
 
-  const closeModal = () => {
+  const close = () => {
     let scale = 100;
 
     modalWindow.style.transform = `scale(${scale/100})`;
@@ -50,14 +51,18 @@ const openModal = ({
 
   const checkClose = event => {
     if (event.target.closest(closeButtonSelector) || !event.target.closest(modalWindowSelector)) {
-      closeModal();
+      close();
     }
+  };
+
+  if (openButtonsSelector) {
+    openButtons.forEach(button => {
+      button.addEventListener('click', open);
+    });
+  } else {
+    open();
+    setTimeout(close, timer * 1000);
   }
-
-  openButtons.forEach(button => {
-    button.addEventListener('click', openModal);
-  });
-
 
 };
 
