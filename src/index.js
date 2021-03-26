@@ -9,6 +9,7 @@ import sendForm from './modules/sendForm';
 import hints from './modules/hints';
 import CarouselSlider from './modules/carouselSlider';
 import accordion from './modules/accordion';
+// import Filter from './modules/filter';
 
 openNumber();
 popupMenu();
@@ -407,3 +408,12 @@ accordion({
   messageSelector: '.msg',
   activeSelector: '.msg-active'
 });
+
+// const filter = new Filter({
+//   checkBoxFieldSelector: '.heroes-movie',
+//   cardsWrapperSelector: '.heroes-wrapper',
+//   urlDatabase: './dbHeroes.json',
+//   selectOptionSelector: '#searchKey',
+//   cardSelector: '.heroes-card',
+//   nameCardSelector: '.heroes-name'
+// });

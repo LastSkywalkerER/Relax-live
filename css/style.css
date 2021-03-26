@@ -2822,8 +2822,8 @@ div.wave-block:nth-child(17):after {
 }
 @media (max-width: 575px) {
   .problems-item-popup-1:before {
-    background: url("../images/problems/popup_bg_mobile.svg") no-repeat;
-    background-size: contain;
+    background: url("../images/problems/popup_bg_mobile.png") no-repeat;
+    background-size: 100% 100%;
     /* -webkit-transform: rotate(360deg);
     transform: rotate(360deg); */
   }
@@ -2848,8 +2848,8 @@ div.wave-block:nth-child(17):after {
 }
 @media (max-width: 575px) {
   .problems-item-popup-2:before {
-    background: url("../images/problems/popup_bg_mobile.svg") no-repeat;
-    background-size: contain;
+    background: url("../images/problems/popup_bg_mobile.png") no-repeat;
+    background-size: 100% 100%;
   }
 }
 .problems-item-popup-3 {
@@ -2867,8 +2867,8 @@ div.wave-block:nth-child(17):after {
 }
 @media (max-width: 575px) {
   .problems-item-popup-3:before {
-    background: url("../images/problems/popup_bg_mobile.svg") no-repeat;
-    background-size: contain;
+    background: url("../images/problems/popup_bg_mobile.png") no-repeat;
+    background-size: 100% 100%;
   }
 }
 .problems-item-popup-4 {
@@ -2886,8 +2886,8 @@ div.wave-block:nth-child(17):after {
 }
 @media (max-width: 575px) {
   .problems-item-popup-4:before {
-    background: url("../images/problems/popup_bg_mobile.svg") no-repeat;
-    background-size: contain;
+    background: url("../images/problems/popup_bg_mobile.png") no-repeat;
+    background-size: 100% 100%;
   }
 }
 .problems-item-popup__title {
