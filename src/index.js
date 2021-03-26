@@ -11,13 +11,9 @@ import CarouselSlider from './modules/carouselSlider';
 import accordion from './modules/accordion';
 import Filter from './modules/filter';
 import Validator from './modules/validator';
-import Preloader from './modules/preloader';
-
-const preloader = new Preloader();
-preloader.start();
+// import Preloader from './modules/preloader';
 
 document.addEventListener('DOMContentLoaded', () => {
-  preloader.stop();
 
   openNumber();
 
@@ -450,6 +446,27 @@ document.addEventListener('DOMContentLoaded', () => {
     dateSelector: '.popup-repair-types-content__head-date',
     searchKey: 'title',
   });
-  filter.init();
+  filter.init().then(() => {
+    const carouselSliderPricelistTabsButton = new CarouselSlider({
+      main: '.nav-popup-repair-types',
+      wrap: '.nav-list-popup-repair',
+      prev: '#nav-arrow-popup-repair_left',
+      next: '#nav-arrow-popup-repair_right',
+      slidesToShow: 3,
+      overflow: true,
+      hideOverflow: true,
+      responsive: [{
+          breackpoint: 768,
+          slidesToShow: 2
+        },
+        {
+          breackpoint: 575,
+          slidesToShow: 1
+        },
+      ],
+      maxBreakpoint: 1024,
+    });
+    carouselSliderPricelistTabsButton.init();
+  });
 
 });

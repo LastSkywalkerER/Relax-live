@@ -98,4 +98,11 @@ class Preloader {
   }
 }
 
-export default Preloader;
+// export default Preloader;
+
+const preloader = new Preloader();
+preloader.start();
+
+document.addEventListener('DOMContentLoaded', () => {
+  preloader.stop();
+});

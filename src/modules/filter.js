@@ -26,10 +26,10 @@ class Filter {
 
   // запуск
   init() {
-    this.getData(this.urlDataBase, data => {
+    this.listeners();
+    return this.getData(this.urlDataBase, data => {
       this.renderCheckbox(this.getValues(data, this.searchKey));
     });
-    this.listeners();
   }
 
   // запрос на получение данных с сервера при первой загрузке или хранилища если есть
@@ -93,6 +93,7 @@ class Filter {
 
       if (beginKey === 0) {
         beginKey = item;
+        box.classList.add('active');
       }
 
       box.classList.add('button_o');

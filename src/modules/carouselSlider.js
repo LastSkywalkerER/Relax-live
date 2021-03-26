@@ -393,7 +393,9 @@ class CarouselSlider {
     }
     const slidesToShow = [...this.wrap.children].slice(beginSlideIndex, endSlideIndex);
 
-    [...this.wrap.children].forEach(slide => slide.style.opacity = '0');
+    if (this.checkWidthStyle()) {
+      [...this.wrap.children].forEach(slide => slide.style.opacity = '0');
+    }
 
     slidesToShow.forEach(slide => slide.style.opacity = '');
   }
@@ -559,6 +561,7 @@ class CarouselSlider {
     this.style.remove();
     this.options.position = 0;
     this.moveSlides();
+    [...this.wrap.children].forEach(slide => slide.style.opacity = '');
   }
 
   delete() {
