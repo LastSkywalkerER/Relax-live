@@ -18,7 +18,6 @@ const openModal = ({
     const openAnimation = () => {
       scale += step;
       modalWindow.style.transform = `scale(${scale/100})`;
-      console.log(modalWindow);
       if (scale < 100) {
         requestAnimationFrame(openAnimation);
       }

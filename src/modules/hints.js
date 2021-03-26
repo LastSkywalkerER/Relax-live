@@ -16,8 +16,8 @@ const hints = ({
         z-index: 100;
       }
       ${hintsSelector}:before {
-        -webkit-transform: rotate(180deg) translateY(20px);
-        transform: rotate(180deg) translateY(20px); 
+        -webkit-transform: rotate(180deg) ;
+        transform: rotate(180deg) ; 
       }
     `;
     document.head.append(style);
