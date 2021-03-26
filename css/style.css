@@ -4243,7 +4243,7 @@ div.wave-block:nth-child(17):after {
   position: relative;
   margin: 0 auto;
   padding: 0;
-  overflow: hidden;
+  /* overflow: hidden; */
 }
 .accordion-more {
   position: relative;
