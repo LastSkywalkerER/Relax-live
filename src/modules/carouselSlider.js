@@ -63,6 +63,10 @@ class CarouselSlider {
       this.controlSlider();
     }
 
+    if (this.maxBreakpoint || this.minBreakpoint) {
+      this.controlResize();
+    }
+
     this.addGloClass();
 
     if (this.checkWidthStyle()) {
@@ -176,6 +180,24 @@ class CarouselSlider {
       return true;
     }
     return false;
+  }
+
+  // применяем или скрываем стили слайдера при нужных ширинах
+  setStyleOnResize() {
+    if (this.checkWidthStyle()) {
+      this.addStyle();
+    } else {
+      if (this.style) {
+        this.clearStyle();
+      }
+    }
+
+    this.setCurrentSlide();
+  }
+
+  // запуск проверки ширины и добавления\удаления стиля
+  controlResize() {
+    window.addEventListener('resize', this.setStyleOnResize.bind(this));
   }
 
   // добавляем запасные слайды для эффекта бесконечной прокрутки
@@ -556,6 +578,7 @@ class CarouselSlider {
       maxResponse = Math.max(...allResponse);
 
     this.checkResponse = () => {
+
       const widthWindow = document.documentElement.clientWidth;
       if (widthWindow < maxResponse) {
         for (let i = 0; i < allResponse.length; i++) {
@@ -571,16 +594,8 @@ class CarouselSlider {
         this.slidesToShow = slidesToShowDefault;
         this.updateOptions();
       }
+
       this.setCurrentSlide();
-
-      if (this.checkWidthStyle()) {
-        this.addStyle();
-      } else {
-        if (this.style) {
-          this.clearStyle();
-        }
-      }
-
     };
 
     this.checkResponse();
@@ -611,6 +626,7 @@ class CarouselSlider {
     }
     document.removeEventListener('keydown', this.setSlideKeys.bind(this));
     window.removeEventListener('resize', this.checkResponse.bind(this));
+    window.removeEventListener('resize', this.setStyleOnResize.bind(this));
   }
 };
 

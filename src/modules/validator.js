@@ -7,7 +7,8 @@ class Validator {
     form,
     selector,
     pattern = {},
-    method
+    method,
+    defaultButtonClass,
   }) {
     if (form) {
       this.form = form;
@@ -27,11 +28,15 @@ class Validator {
     this.hideButton = document.createElement('div');
     this.buttonWrap = document.createElement('div');
     this.buttonWrap.classList.add('validator-disabled');
+    this.buttonClass = this.submitBtn.classList[this.submitBtn.classList.length - 1] === defaultButtonClass.slice(1) ? 0 : this.submitBtn.classList[this.submitBtn.classList.length - 1];
     this.stateDisabled = 0;
   }
 
   // применяем стили, создаём паттерны при необходимости, блокируем кнопку, вешаем прослушку с валидностью введённых данных
   init() {
+    if (this.buttonClass) {
+      this.buttonWrap.classList.add(this.buttonClass);
+    }
     this.applyStyle();
     this.setPattern();
     this.disableButton();
@@ -39,6 +44,7 @@ class Validator {
       this.checkIt(event);
     }));
     this.form.addEventListener('click', event => {
+
       if (event.target === this.hideButton) {
         this.checkIt();
       } else {
@@ -48,14 +54,7 @@ class Validator {
       }
     });
     this.form.addEventListener('submit', e => {
-      this.elementsForm.forEach(elem => this.checkIt({
-        target: elem
-      }));
-      e.preventDefault();
-
-      if (this.error.size) {
-        this.disableButton();
-      }
+      this.disableButton();
     });
   }
 
@@ -96,6 +95,9 @@ class Validator {
     if (!this.stateDisabled) {
       this.submitBtn.setAttribute('disabled', '');
       this.submitBtn.classList.add('disabled');
+      if (this.buttonClass) {
+        this.submitBtn.classList.remove(this.buttonClass);
+      }
       this.submitBtn.insertAdjacentElement('afterend', this.buttonWrap);
       this.buttonWrap.append(this.submitBtn);
       this.buttonWrap.append(this.hideButton);
@@ -108,6 +110,9 @@ class Validator {
     if (this.stateDisabled) {
       this.submitBtn.removeAttribute('disabled', '');
       this.submitBtn.classList.remove('disabled');
+      if (this.buttonClass) {
+        this.submitBtn.classList.add(this.buttonClass);
+      }
       this.buttonWrap.insertAdjacentElement('afterend', this.submitBtn);
       this.hideButton.remove();
       this.buttonWrap.remove();

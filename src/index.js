@@ -72,7 +72,8 @@ document.addEventListener('DOMContentLoaded', () => {
             ['notEmpty'],
             ['pattern', 'name']
           ]
-        }
+        },
+        defaultButtonClass: '.button',
       });
       validator.init();
     },
@@ -245,7 +246,7 @@ document.addEventListener('DOMContentLoaded', () => {
     overflow: true,
     hideOverflow: true,
     slidesToShow: 1,
-    maxBreakpoint: 1024,
+    maxBreakpoint: 1090,
   });
   carouselSliderTransparency.init();
 
