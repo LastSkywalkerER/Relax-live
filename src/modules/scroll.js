@@ -19,6 +19,7 @@ const scroll = () => {
   const smoothScroll = (scrollFrom, scrollTo) => {
     const position = document.documentElement.scrollTop;
 
+    // устанавливаем приращение координаты в зависимости от положения с параболической зависимостью
     document.documentElement.scrollTop = position + direction * paraboleByThreePointsY(Math.min(scrollFrom, scrollTo), 0, Math.abs(Math.max(scrollFrom, scrollTo) - Math.min(scrollFrom, scrollTo)) / 2, accelerate, Math.max(scrollFrom, scrollTo), 0, position, speed);
     if (positionControl !== position) {
       requestAnimationFrame(() => {
