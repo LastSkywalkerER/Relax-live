@@ -199,11 +199,18 @@ document.addEventListener('DOMContentLoaded', () => {
     prev: '#popup_portfolio_left',
     next: '#popup_portfolio_right',
     pagination: [{
-      type: 'counter',
-      wrap: '#popup-portfolio-counter',
-      current: '.slider-counter-content__current',
-      total: '.slider-counter-content__total',
-    }],
+        type: 'counter',
+        wrap: '#popup-portfolio-counter',
+        current: '.slider-counter-content__current',
+        total: '.slider-counter-content__total',
+      },
+      {
+        type: 'button',
+        wrap: '.slider-wrapper__portfolio-slider',
+        button: '.portfolio-slider__slide-frame',
+        active: '.active',
+      }
+    ],
     description: {
       wrap: '.popup-dialog-portfolio',
       rows: '.popup-portfolio-text',
@@ -240,11 +247,18 @@ document.addEventListener('DOMContentLoaded', () => {
     slidesToShow: 1,
     overflow: true,
     pagination: [{
-      type: 'counter',
-      wrap: '#transparency-popup-counter',
-      current: '.slider-counter-content__current',
-      total: '.slider-counter-content__total',
-    }],
+        type: 'counter',
+        wrap: '#transparency-popup-counter',
+        current: '.slider-counter-content__current',
+        total: '.slider-counter-content__total',
+      },
+      {
+        type: 'button',
+        wrap: '.transparency-slider',
+        button: '.transparency-item__img',
+        active: '.active',
+      }
+    ],
   });
   carouselSliderTransparencyModal.init();
 

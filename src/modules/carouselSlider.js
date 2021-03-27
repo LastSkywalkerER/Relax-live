@@ -139,7 +139,11 @@ class CarouselSlider {
         }
         if (pagination.type === 'button') {
           this.butonsWrap = document.querySelector(pagination.wrap);
-          this.buttons = [...this.butonsWrap.children];
+          if (pagination.button) {
+            this.buttons = [...this.butonsWrap.querySelectorAll(pagination.button)];
+          } else {
+            this.buttons = [...this.butonsWrap.children];
+          }
           this.paginationButton = pagination;
           this.controlPaginationButton();
         }
