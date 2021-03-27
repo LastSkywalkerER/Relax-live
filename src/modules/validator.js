@@ -1,6 +1,7 @@
 /* eslint-disable eol-last */
 /* eslint-disable max-len */
 
+// получаем форму, её элементы, кнопку
 class Validator {
   constructor({
     form,
@@ -26,26 +27,16 @@ class Validator {
     this.hideButton = document.createElement('div');
     this.buttonWrap = document.createElement('div');
     this.buttonWrap.classList.add('validator-disabled');
+    this.stateDisabled = 0;
   }
 
+  // применяем стили, создаём паттерны при необходимости, блокируем кнопку, вешаем прослушку с валидностью введённых данных
   init() {
     this.applyStyle();
     this.setPattern();
     this.disableButton();
-    this.elementsForm.forEach(elem => elem.addEventListener('input', () => {
-      this.elementsForm.forEach(target => {
-        if (this.isValid(target)) {
-          this.error.delete(target);
-          if (!this.error.size) {
-            this.enableButton();
-          }
-        } else {
-          this.error.add(target);
-          if (this.error.size) {
-            this.disableButton();
-          }
-        }
-      });
+    this.elementsForm.forEach(elem => elem.addEventListener('input', event => {
+      this.checkIt(event);
     }));
     this.form.addEventListener('click', event => {
       if (event.target === this.hideButton) {
@@ -68,6 +59,7 @@ class Validator {
     });
   }
 
+  // проверка соответсвия патерну или нажатого чекбокса
   isValid(elem) {
     const validatorMethod = {
       notEmpty(elem) {
@@ -99,32 +91,49 @@ class Validator {
     return true;
   }
 
+  // отключаем кнопку и перекрываем её дивом, чтоб проверять клик по кнопке
   disableButton() {
-    this.submitBtn.setAttribute('disabled', '');
-    this.submitBtn.classList.add('disabled');
-    this.submitBtn.insertAdjacentElement('afterend', this.buttonWrap);
-    this.buttonWrap.append(this.submitBtn);
-    this.buttonWrap.append(this.hideButton);
+    if (!this.stateDisabled) {
+      this.submitBtn.setAttribute('disabled', '');
+      this.submitBtn.classList.add('disabled');
+      this.submitBtn.insertAdjacentElement('afterend', this.buttonWrap);
+      this.buttonWrap.append(this.submitBtn);
+      this.buttonWrap.append(this.hideButton);
+      this.stateDisabled = 1;
+    }
   }
 
+  // разблокируем кнопку
   enableButton() {
-    this.submitBtn.removeAttribute('disabled', '');
-    this.submitBtn.classList.remove('disabled');
-    this.buttonWrap.insertAdjacentElement('afterend', this.submitBtn);
-    this.hideButton.remove();
-    this.buttonWrap.remove();
+    if (this.stateDisabled) {
+      this.submitBtn.removeAttribute('disabled', '');
+      this.submitBtn.classList.remove('disabled');
+      this.buttonWrap.insertAdjacentElement('afterend', this.submitBtn);
+      this.hideButton.remove();
+      this.buttonWrap.remove();
+      this.stateDisabled = 0;
+    }
   }
 
+  // проверка валидности элементов формы и вывод соответсвующих сообщений
   checkIt(event) {
     this.elementsForm.forEach(target => {
       if (this.isValid(target)) {
-        this.showSuccess(target);
+        if (event && event.target.tagName.toLowerCase() !== 'input') {
+          this.showSuccess(target);
+        } else if (!event) {
+          this.showSuccess(target);
+        }
         this.error.delete(target);
         if (!this.error.size) {
           this.enableButton();
         }
       } else {
-        this.showError(target);
+        if (event && event.target.tagName.toLowerCase() !== 'input') {
+          this.showError(target);
+        } else if (!event) {
+          this.showError(target);
+        }
         this.error.add(target);
         if (this.error.size) {
           this.disableButton();
@@ -133,6 +142,7 @@ class Validator {
     });
   }
 
+  // отображение сообщения напротив ошибочного поля
   showError(elem) {
     elem.classList.remove('success');
     elem.classList.add('error');
@@ -145,6 +155,7 @@ class Validator {
     elem.insertAdjacentElement('afterend', errorDiv);
   }
 
+  // снятие ошибки и подсветка верного поля
   showSuccess(elem) {
     elem.classList.remove('error');
     elem.classList.add('success');
@@ -153,6 +164,7 @@ class Validator {
     }
   }
 
+  // применение стилей
   applyStyle() {
     const style = document.createElement('style');
     style.textContent = `
@@ -190,6 +202,7 @@ class Validator {
     document.head.append(style);
   }
 
+  // установка паттернов валидации полей
   setPattern() {
     if (!this.pattern.phone) {
       this.pattern.phone = /^\+7 \(\d\d\d\) \d\d\d-\d\d-\d\d$/;

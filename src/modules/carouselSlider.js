@@ -18,6 +18,7 @@ class CarouselSlider {
     sliderInSlider,
     description,
   }) {
+    // проверяем переделаи ли нам самое главное
     try {
       this.main = document.querySelector(main);
       this.wrap = document.querySelector(wrap);
@@ -51,6 +52,7 @@ class CarouselSlider {
     this.checkResponse = () => {};
   }
 
+  // запускаем прослушку, кнопки стили и т д
   init() {
     if (this.prev === true && this.next === true) {
       this.addArrow();
@@ -75,8 +77,6 @@ class CarouselSlider {
       this.addMoreSlides();
     }
 
-
-
     this.pagainationInit();
 
     if (this.slidesToHighlight) {
@@ -98,11 +98,13 @@ class CarouselSlider {
     }
   }
 
+  // получаем блоки с описанием
   descriptionInit() {
     this.descriptionSlides = [...document.querySelector(this.description.wrap).querySelectorAll(this.description.rows)];
     this.setCurrentDescriptionSlide();
   }
 
+  // показываем описание соответсвующее текущему слайду
   setCurrentDescriptionSlide() {
     const absolutePosition = this.getAbsolutePosition() - 1;
 
@@ -128,6 +130,7 @@ class CarouselSlider {
 
   }
 
+  // проверяем какую пагинацию нам передали и иницируем соответсвенно
   pagainationInit() {
     if (this.pagination) {
       this.pagination.forEach(pagination => {
@@ -152,6 +155,7 @@ class CarouselSlider {
     }
   }
 
+  // проверяем текущую ширину экрана и её совпадение с переданным диапозоном работы
   checkWidthStyle() {
 
     if (this.maxBreakpoint && !this.minBreakpoint) {
@@ -174,6 +178,7 @@ class CarouselSlider {
     return false;
   }
 
+  // добавляем запасные слайды для эффекта бесконечной прокрутки
   addMoreSlides() {
     this.clonedSlides = [];
     this.clonedSlides.push(this.slides.map(element => element.cloneNode(true)));
@@ -183,6 +188,7 @@ class CarouselSlider {
     this.rerenderSlides();
   }
 
+  // перерисовыем слайды с добавлением новых
   rerenderSlides() {
     this.options.position += this.slides.length;
     this.moveSlides();
@@ -191,6 +197,7 @@ class CarouselSlider {
 
   }
 
+  // вешаем на активные элементы свои классы для стилизации
   addGloClass() {
     this.main.classList.add(`glo-slider-${this.key}`);
     this.wrap.classList.add(`glo-slider__wrap-${this.key}`);
@@ -199,6 +206,7 @@ class CarouselSlider {
     }
   }
 
+  // добавялем стили в документ
   addStyle() {
     this.style = document.getElementById(`sliderCarousel-style-${this.key}`);
     if (!this.style) {
@@ -230,6 +238,7 @@ class CarouselSlider {
     document.head.append(this.style);
   }
 
+  // резервные стили без анимации, чтобы не видеть скачков для создания эффекта бесконечности 
   disableAnimation() {
     if (this.style) {
       this.style.textContent = `
@@ -254,6 +263,7 @@ class CarouselSlider {
     }
   }
 
+  // вешаем переключение слайдов на элементы управления
   controlSlider() {
     if (this.prev && this.next) {
       this.prev.addEventListener('click', this.prevSlider.bind(this));
@@ -263,6 +273,7 @@ class CarouselSlider {
     }
   }
 
+  // проверяем нажатую кнопку и листаем в нужную сторону
   setSlideKeys(event) {
     if (event.key === 'ArrowRight') {
       this.nextSlider();
@@ -272,12 +283,14 @@ class CarouselSlider {
     }
   }
 
+  // предохранитель для пагинации счётчика
   controlPagination() {
     if (this.paginationCounter) {
       this.controlPaginationCounter();
     }
   }
 
+  // получение текущей позиции слайдера, на случай, когда он бесконечный выдаёт актуальное число
   getAbsolutePosition() {
     let absolutePosition = this.options.position + 1;
     while ((absolutePosition - this.slides.length) > 0) {
@@ -286,12 +299,14 @@ class CarouselSlider {
     return absolutePosition;
   }
 
+  // обновляем чиселки в счётчике пагинации
   controlPaginationCounter() {
     const counter = this.getAbsolutePosition();
     this.paginationCurrent.textContent = counter;
     this.paginationTotal.textContent = this.slides.length;
   }
 
+  // вешаем перелистывание слайдов на кнпоки пагинацию
   controlPaginationButton() {
     this.butonsWrap.addEventListener('click', event => {
       this.buttons.forEach((buton, index) => {
@@ -308,6 +323,7 @@ class CarouselSlider {
     })
   }
 
+  // создаём слайдер в слайдере
   createSliderInSlider(currentSlideSelector) {
 
     this.sliderInSlider = this.createNewSliderInSlider({
@@ -316,6 +332,7 @@ class CarouselSlider {
     this.sliderInSlider.init();
   }
 
+  // сменяем слайдер при переключении этого слайдера
   changeSliderInSlider(currentSlideSelector) {
     this.sliderInSlider.delete();
     this.sliderInSlider = this.createNewSliderInSlider({
@@ -324,10 +341,12 @@ class CarouselSlider {
     this.sliderInSlider.init();
   }
 
+  // функция перемещения слайдов
   moveSlides() {
     this.wrap.style.transform = `translateX(${-this.options.position * this.options.widthSlide}%)`;
   }
 
+  // установка текущего слайда с проверкой мешуры которая с ним связана
   setCurrentSlide() {
     if (this.checkWidthStyle()) {
       this.addStyle();
@@ -361,6 +380,7 @@ class CarouselSlider {
     }
   }
 
+  // переключаем слайд назад
   prevSlider() {
     if (this.options.infinity && this.options.position < this.slides.length / 2) {
       this.disableAnimation();
@@ -375,6 +395,7 @@ class CarouselSlider {
     }
   }
 
+  // переключаем слайд вперёд
   nextSlider() {
     if (this.options.infinity && this.options.position > this.slides.length * 2.5 - 1) {
       this.disableAnimation();
@@ -389,6 +410,7 @@ class CarouselSlider {
     }
   }
 
+  // показываем текущие слайды, а остальные делаем прозрачными
   showSlides() {
     let beginSlideIndex = this.options.position,
       endSlideIndex = this.options.position + this.slidesToShow;
@@ -404,6 +426,7 @@ class CarouselSlider {
     slidesToShow.forEach(slide => slide.style.opacity = '');
   }
 
+  // подсветка текущего слайда
   highlightСurrent() {
     let beginSlideIndex = this.options.position + Math.floor((this.slidesToShow - this.slidesToHighlight) / 2),
       endSlideIndex = this.options.position + Math.floor(this.slidesToShow - this.slidesToHighlight / 2);
@@ -437,6 +460,7 @@ class CarouselSlider {
     });
   }
 
+  // правим положение стрелок, если необходимо
   stylizationArrows() {
     this.prev.classList.add('glo-slider__prev');
     this.next.classList.add('glo-slider__next');
@@ -469,6 +493,7 @@ class CarouselSlider {
     }
   }
 
+  // добавляем стрелки, если необходимо
   addArrow() {
     this.prev = document.createElement('button');
     this.next = document.createElement('button');
@@ -515,6 +540,7 @@ class CarouselSlider {
     document.head.append(style);
   }
 
+  // обновляем параметры слайдера
   updateOptions() {
     this.options.widthSlide = Math.floor(100 / this.slidesToShow);
     this.options.maxPosition = this.slides.length - this.slidesToShow;
@@ -523,6 +549,7 @@ class CarouselSlider {
     }
   }
 
+  // реализация адаптивности, проверяем сколько слайдов должно быть при текущей ширине и должен ли работать слайдер
   responseInit() {
     const slidesToShowDefault = this.slidesToShow,
       allResponse = this.responsive.map(item => item.breackpoint),
@@ -561,6 +588,7 @@ class CarouselSlider {
     window.addEventListener('resize', this.checkResponse.bind(this));
   }
 
+  // очистка стилей слайдера
   clearStyle() {
     this.style.remove();
     this.options.position = 0;
@@ -568,6 +596,7 @@ class CarouselSlider {
     [...this.wrap.children].forEach(slide => slide.style.opacity = '');
   }
 
+  // возвращение слайдов к первоначальному состояние и удаление прослушки (типо удаление слайдера)
   delete() {
     this.wrap.textContent = '';
     this.slides.forEach(slide => this.wrap.append(slide));

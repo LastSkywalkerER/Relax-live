@@ -1,5 +1,6 @@
 'use strict';
 
+// импортируем модули
 import openNumber from './modules/openNumber';
 import popupMenu from './modules/popupMenu';
 import scroll from './modules/scroll';
@@ -11,16 +12,20 @@ import CarouselSlider from './modules/carouselSlider';
 import accordion from './modules/accordion';
 import Filter from './modules/filter';
 import Validator from './modules/validator';
-// import Preloader from './modules/preloader';
 
+// ждём загрузки документа
 document.addEventListener('DOMContentLoaded', () => {
 
+  // разворачивание номера в шапке
   openNumber();
 
+  // активация меню по кнопке
   popupMenu();
 
+  // включение плавной прокрутки
   scroll();
 
+  // отрыте модалки с политикой конфеденциальности
   openModal({
     modalWrapSelector: '.popup-privacy',
     modalWindowSelector: '.popup-dialog-privacy',
@@ -28,6 +33,7 @@ document.addEventListener('DOMContentLoaded', () => {
     closeButtonSelector: '.close'
   });
 
+  // модлка со списком услуг
   openModal({
     modalWrapSelector: '.popup-repair-types',
     modalWindowSelector: '.popup-dialog-repair-types',
@@ -35,8 +41,10 @@ document.addEventListener('DOMContentLoaded', () => {
     closeButtonSelector: '.close'
   });
 
+  // маска на поля номеров
   phoneMask('+7 (___) ___-__-__');
 
+  // функция отправки форм с вызовом модалки об успешной отправке
   sendForm({
     errorMessage: 'Что-то пошло не так...',
     successPopup: () => {
@@ -70,6 +78,7 @@ document.addEventListener('DOMContentLoaded', () => {
     },
   });
 
+  // запуск слайдера на кружках формулы успеха в мобильной версии
   const carouselSliderFormula = new CarouselSlider({
     main: '.formula-slider-wrap',
     wrap: '.formula-slider',
@@ -90,6 +99,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
   carouselSliderFormula.init();
 
+  // активация подсказок на кружках формулы успеха
   hints({
     iconsSelector: '.formula-item__icon',
     iconsInnerSelector: '.formula-item__icon-inner',
@@ -97,6 +107,7 @@ document.addEventListener('DOMContentLoaded', () => {
     mainWrapperSelector: '.row',
   });
 
+  // подключение слайдера слайдеров видов ремонта. На кнопки переключаются слайды. слайдами являются слайдера с картинками.
   const carouselSliderRepairTypesTabs = new CarouselSlider({
     main: '.repair-types-slider',
     wrap: '.slider-wrapper',
@@ -129,6 +140,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
   carouselSliderRepairTypesTabs.init();
 
+  // подключение слайдера на кнопки видов ремонта на мобильных версиях
   const carouselSliderRepairTypesTabsButton = new CarouselSlider({
     main: '.repair-types-nav',
     wrap: '.nav-list-repair',
@@ -148,6 +160,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
   carouselSliderRepairTypesTabsButton.init();
 
+  // подключение слайдера на портфолио на декстопных экранах
   const carouselSliderPortfolio = new CarouselSlider({
     main: '.portfolio-slider',
     wrap: '.slider-wrapper__portfolio-slider',
@@ -168,6 +181,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
   carouselSliderPortfolio.init();
 
+  // подключение слайдера на портфолио на мобильных экранах
   const carouselSliderPortfolioMobile = new CarouselSlider({
     main: '.portfolio-slider-mobile',
     wrap: '.slider-wrapper__portfolio-slider-mobile',
@@ -186,6 +200,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
   carouselSliderPortfolioMobile.init();
 
+  // открытие модалки по клику на слайд портфолио
   openModal({
     modalWrapSelector: '.popup-portfolio',
     modalWindowSelector: '.popup-dialog-portfolio',
@@ -193,6 +208,7 @@ document.addEventListener('DOMContentLoaded', () => {
     closeButtonSelector: '.close'
   });
 
+  // запуск слайдера в модалке, передаём картинки как пагинацию, чтобы открыть сразу нужную, а описание листается вместе со слайдами
   const carouselSliderPortfolioModal = new CarouselSlider({
     main: '.popup-portfolio-slider-wrap',
     wrap: '.popup-portfolio-slider',
@@ -220,6 +236,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
   carouselSliderPortfolioModal.init();
 
+  // запускаем слайдер на документах в мобильных версиях
   const carouselSliderTransparency = new CarouselSlider({
     main: '.transparency-slider-wrap',
     wrap: '.transparency-slider',
@@ -232,6 +249,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
   carouselSliderTransparency.init();
 
+  // модалка на документах
   openModal({
     modalWrapSelector: '.popup-transparency',
     modalWindowSelector: '.popup-dialog-transparency',
@@ -239,6 +257,7 @@ document.addEventListener('DOMContentLoaded', () => {
     closeButtonSelector: '.close'
   });
 
+  // слайдер в модалке документов, передаём договоры как пагинацию, чтобы открыть сразу нужный
   const carouselSliderTransparencyModal = new CarouselSlider({
     main: '.popup-transparency-slider',
     wrap: '.slider-wrapper__popup-transparency-slider',
@@ -262,6 +281,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
   carouselSliderTransparencyModal.init();
 
+  // слайдер на мобильной версии крудочков с проблемами
   const carouselSliderProblems = new CarouselSlider({
     main: '.problems-slider-wrap',
     wrap: '.problems-slider',
@@ -276,6 +296,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
   carouselSliderProblems.init();
 
+  // активируем подсказки с проблемами
   hints({
     iconsSelector: '.problems-item__icon',
     iconsInnerSelector: '.problems-item__icon-inner',
@@ -283,6 +304,7 @@ document.addEventListener('DOMContentLoaded', () => {
     mainWrapperSelector: '.row',
   });
 
+  // запускаем слайдер с пагинацией кнопками и переключаем превьюшки как описание, слайдами являются слайдеры с картинками, у которых пагинация это - превьюшки
   const carouselSliderDesignTabs = new CarouselSlider({
     main: '.designs-slider',
     wrap: '.slider-wrapper__designs-slider',
@@ -325,6 +347,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
   carouselSliderDesignTabs.init();
 
+  // слайдер на кнопках дизайна в мобильной версии
   const carouselSliderDesignTabsButton = new CarouselSlider({
     main: '.nav-designs',
     wrap: '#designs-list',
@@ -344,6 +367,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
   carouselSliderDesignTabsButton.init();
 
+  // модалка с дизайнами
   openModal({
     modalWrapSelector: '.popup-design',
     modalWindowSelector: '.popup-dialog-design',
@@ -351,6 +375,7 @@ document.addEventListener('DOMContentLoaded', () => {
     closeButtonSelector: '.close'
   });
 
+  // так же как и на странице слайдер с кнопками перелистывающий слайдер с картинками
   const carouselSliderDesignModal = new CarouselSlider({
     main: '.popup-design-slider',
     wrap: '.slider-wrapper__popup-design-slider',
@@ -387,6 +412,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
   carouselSliderDesignModal.init();
 
+  // модалка с консультацией
   openModal({
     modalWrapSelector: '.popup-consultation',
     modalWindowSelector: '.feedback-wrap',
@@ -394,6 +420,7 @@ document.addEventListener('DOMContentLoaded', () => {
     closeButtonSelector: '.close'
   });
 
+  // слайдер с отзывами
   const carouselSliderReviews = new CarouselSlider({
     main: '.reviews-slider',
     wrap: '.slider-wrapper__reviews-slider',
@@ -406,6 +433,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
   carouselSliderReviews.init();
 
+  // слайдер на схеме ведение проекта
   const carouselSliderScheme = new CarouselSlider({
     main: '.scheme-slider',
     wrap: '.slider-wrapper__scheme-slider',
@@ -424,6 +452,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
   carouselSliderScheme.init();
 
+  // слайдер партнёров
   const carouselSliderPartners = new CarouselSlider({
     main: '#partners',
     wrap: '.partners-slider',
@@ -445,6 +474,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
   carouselSliderPartners.init();
 
+  // красивенький аккордеон)
   accordion({
     wrapSelector: '.accordion',
     itemSelector: '.title_block',
@@ -452,6 +482,7 @@ document.addEventListener('DOMContentLoaded', () => {
     activeSelector: '.msg-active'
   });
 
+  // получаем и распихиываем данные полученные с базы в модалке со списком услуг, а затем через промис вешаем слайдер на кнопки, чтоб успели прогрузиться
   const filter = new Filter({
     checkBoxFieldSelector: '.nav-list-popup-repair',
     cardsWrapperSelector: '.popup-repair-types-content-table__list>tbody',

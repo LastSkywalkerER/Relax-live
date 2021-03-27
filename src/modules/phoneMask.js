@@ -1,6 +1,7 @@
 const phoneMask = (mask) => {
   const inputFields = document.querySelectorAll('input[name="phone"]');
 
+  // рисуем маску, вводим только числа и не даём ничего другого
   const checkMask = event => {
 
     if (event.target.value) {
@@ -25,6 +26,7 @@ const phoneMask = (mask) => {
     }
   };
 
+  // показываем начальную маску
   const setBegin = event => {
     if (!event.target.value) {
       event.target.value = mask;
@@ -33,12 +35,14 @@ const phoneMask = (mask) => {
     }
   };
 
+  // если ничего не вводили очищаем поле
   const clearIfEmpty = event => {
     if (event.target.value === mask) {
       event.target.value = '';
     }
   }
 
+  // вешаем маску на все поля с номерами
   inputFields.forEach(field => {
     field.addEventListener('input', checkMask);
     field.addEventListener('focus', setBegin);

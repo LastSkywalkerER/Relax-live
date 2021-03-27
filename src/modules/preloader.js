@@ -2,15 +2,19 @@ class Preloader {
   constructor() {
 
   }
+
+  // запуск прелоадера
   start() {
     this.setStyle();
     this.createLoading();
   }
+  // остановка прелоадера
   stop() {
     this.statusMessage.remove();
     this.statusMessageStyle.remove();
   }
 
+  // создание обхекта прелоадера
   createLoading() {
     this.statusMessage = document.createElement('div');
     this.statusMessage.classList.add('preloading-wrap');
@@ -26,6 +30,7 @@ class Preloader {
     document.body.insertAdjacentElement('beforeend', this.statusMessage);
   }
 
+  // установка стилей
   setStyle() {
     this.statusMessageStyle = document.createElement('style');
     this.statusMessageStyle.textContent = `
@@ -98,11 +103,11 @@ class Preloader {
   }
 }
 
-// export default Preloader;
-
+// сразу запускаем прелоадер
 const preloader = new Preloader();
 preloader.start();
 
+// останавливаем после загрузки документа
 document.addEventListener('DOMContentLoaded', () => {
   preloader.stop();
 });

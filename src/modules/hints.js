@@ -8,6 +8,7 @@ const hints = ({
     iconsInner = [...document.querySelectorAll(iconsInnerSelector)],
     hints = [...document.querySelectorAll(hintsSelector)];
 
+  // установка стилей для падающих вниз подсказок
   const setDownHintStyle = hint => {
     const style = document.createElement('style');
     style.classList.add('down-hint-style');
@@ -27,6 +28,7 @@ const hints = ({
     }
   };
 
+  // отключение стилей упавших вниз подсказок
   const removeDownHintStyle = hint => {
     const style = document.querySelector('.down-hint-style');
     if (style) {
@@ -39,6 +41,7 @@ const hints = ({
     }
   };
 
+  // проверка влазит ли элемент по вертикали
   const elementInViewport = (el) => {
     let top = el.offsetTop,
       height = el.offsetHeight;
@@ -53,18 +56,20 @@ const hints = ({
     );
   };
 
+  // перемещаем элемент вниз
   const downPositionElement = el => {
     el.style.transform = 'translateY(100%)';
     el.style.bottom = '-80px';
   };
 
+  // сбрасываем смещение элемента
   const defaultPositionElement = el => {
     el.style.transform = '';
     el.style.bottom = '';
   };
 
+  // показываем подсказку по индексу
   const showHint = (index) => {
-    // let opacity = 0;
 
     if (!elementInViewport(hints[index])) {
       setDownHintStyle(hints[index]);
@@ -72,40 +77,13 @@ const hints = ({
     }
 
     hints[index].style.visibility = 'visible';
-
-    // const appearAnimation = () => {
-    //   opacity += 0.05;
-    //   hints[index].style.opacity = `${opacity}`;
-    //   if (opacity <= 1) {
-    //     requestAnimationFrame(appearAnimation);
-    //   }
-    // };
-
-    // appearAnimation();
     hints[index].style.opacity = `1`;
     iconsInner[index].style.opacity = '1';
 
   };
 
+  // закрываем подсказку по индексу
   const closeHint = (index) => {
-    // let opacity = 1;
-
-    // const disappearAnimation = () => {
-    //   opacity -= 0.05;
-    //   hints[index].style.opacity = `${opacity}`;
-    //   if (opacity >= 0.05) {
-    //     requestAnimationFrame(disappearAnimation);
-    //   } else {
-    //     hints[index].style.visibility = '';
-    //     hints[index].style.opacity = '';
-    //     if (elementInViewport(hints[index])) {
-    //       defaultPositionElement(hints[index]);
-    //       removeDownHintStyle(hints[index]);
-    //     }
-    //   }
-    // };
-
-    // disappearAnimation();
     hints[index].style.visibility = '';
     hints[index].style.opacity = '';
     defaultPositionElement(hints[index]);
@@ -113,6 +91,7 @@ const hints = ({
     iconsInner[index].style.opacity = '';
   };
 
+  // показываем подсказки при наведении и скрываем при уводе курсора
   icons.forEach((icon, index) => {
     icon.addEventListener('mouseenter', () => {
       showHint(index);

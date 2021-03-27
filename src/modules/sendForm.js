@@ -9,6 +9,7 @@ const sendForm = ({
   const forms = [...document.querySelectorAll(formsSelector)];
   const statusMessage = document.createElement('div');
 
+  // стилизуем окошко анимации отправки формы
   const setStyle = () => {
     const statusMessageStyle = document.createElement('style');
     statusMessageStyle.textContent = `
@@ -84,6 +85,7 @@ const sendForm = ({
     document.head.append(statusMessageStyle);
   };
 
+  // отправка данных на сервер
   const postData = body => fetch('./server.php', {
     method: 'POST',
     headers: {
@@ -92,6 +94,7 @@ const sendForm = ({
     body: JSON.stringify(body),
   });
 
+  // формируем данные для отправки и выводим соответсвующее сообщение с результатом отправки
   const formPostAction = (event, form) => {
     event.preventDefault();
 
@@ -154,6 +157,7 @@ const sendForm = ({
     });
   };
 
+  // вешаем валидатор и отпарвку на каждую форму
   forms.forEach(form => {
     if (validator) {
       validator(form);
