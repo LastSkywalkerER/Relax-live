@@ -531,7 +531,7 @@ class CarouselSlider {
       .glo-slider__prev,
       .glo-slider__next {
         margin: 0 10px;
-        border: 20px solid transparent;
+        border: 10px solid transparent;
         background: transparent;
         position: absolute;
         top: 50%;
@@ -539,14 +539,14 @@ class CarouselSlider {
       }
 
       .glo-slider__next {
-        border-left-color: #19b5fe;
-        right: 0;
+        border-left-color: white;
+        right: -10px;
         transform: translateX(50%);
       }
 
       .glo-slider__prev {
-        border-right-color: #19b5fe;
-        left: 0;
+        border-right-color: white;
+        left: -10px;
         transform: translateX(-50%);
       }
 

@@ -515,4 +515,17 @@ document.addEventListener('DOMContentLoaded', () => {
     carouselSliderPricelistTabsButton.init();
   });
 
+  // слайдер партнёров
+  const carouselSliderServices = new CarouselSlider({
+    main: '.services-slider',
+    wrap: '.slider-wrapper__services-slider',
+    prev: true,
+    next: true,
+    slidesToShow: 1,
+    maxBreakpoint: 575,
+    infinity: true,
+    overflow: true,
+    hideOverflow: true,
+  });
+  carouselSliderServices.init();
 });
