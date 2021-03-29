@@ -8663,3 +8663,11 @@ strong {
   width: 100%;
   height: 100%;
 }
+
+@media (max-width: 575px) {
+  .button-feedback-block > button {
+    width: 100%;
+    height: 100%;
+    font-size: inherit;
+  }
+}

@@ -548,4 +548,24 @@ document.addEventListener('DOMContentLoaded', () => {
     maxBreakpoint: 1024,
   });
   carouselSliderSchemeButtons.init();
+
+  // слайдер кнопок в попапе дизайна
+  const carouselSliderDesignPopupButtons = new CarouselSlider({
+    main: '.nav-designs.nav-popup',
+    wrap: '#nav-list-popup-designs',
+    prev: '#nav-arrow-popup-designs_left',
+    next: '#nav-arrow-popup-designs_right',
+    slidesToShow: 3,
+    responsive: [{
+        breackpoint: 768,
+        slidesToShow: 2
+      },
+      {
+        breackpoint: 575,
+        slidesToShow: 1
+      },
+    ],
+    maxBreakpoint: 1024,
+  });
+  carouselSliderDesignPopupButtons.init();
 });

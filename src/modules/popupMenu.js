@@ -2,7 +2,7 @@ const popupMenu = () => {
   // получаем обёртку всплыющего меню и через неё сам блок меню, а так же кнопку открытия меню
   const popupMenuWrap = document.querySelector('.popup-menu'),
     popupMenu = popupMenuWrap.childNodes[1],
-    burgerButton = document.querySelector('.menu');
+    burgerButtons = document.querySelectorAll('.menu__icon');
 
   // прячем меню, чтоб оно не летало по экрану
   popupMenu.style.visibility = 'hidden';
@@ -37,7 +37,7 @@ const popupMenu = () => {
   };
 
   // события на кнопку открытия, места закрытия меню
-  burgerButton.addEventListener('click', openPopup);
+  burgerButtons.forEach(buton => buton.addEventListener('click', openPopup));
 };
 
 export default popupMenu;
