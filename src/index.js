@@ -528,4 +528,24 @@ document.addEventListener('DOMContentLoaded', () => {
     hideOverflow: true,
   });
   carouselSliderServices.init();
+
+  // слайдер кнопок в схеме работы
+  const carouselSliderSchemeButtons = new CarouselSlider({
+    main: '.slider-wrapper__scheme-list',
+    wrap: '#scheme-list',
+    prev: '#nav-arrow-scheme_left',
+    next: '#nav-arrow-scheme_right',
+    slidesToShow: 3,
+    responsive: [{
+        breackpoint: 768,
+        slidesToShow: 2
+      },
+      {
+        breackpoint: 575,
+        slidesToShow: 1
+      },
+    ],
+    maxBreakpoint: 1024,
+  });
+  carouselSliderSchemeButtons.init();
 });
